@@ -1,0 +1,116 @@
+ <style>
+    .switch {
+position: relative;
+display: inline-block;
+width: 60px;
+height: 34px;
+}
+
+.switch input {display:none;}
+
+.slider {
+position: absolute;
+cursor: pointer;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background-color: #ccc;
+-webkit-transition: .4s;
+transition: .4s;
+}
+
+.slider:before {
+position: absolute;
+content: "";
+height: 26px;
+width: 26px;
+left: 4px;
+bottom: 4px;
+background-color: white;
+-webkit-transition: .4s;
+transition: .4s;
+}
+
+input:checked + .slider {
+background-color: #2196F3;
+}
+
+input:focus + .slider {
+box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+-webkit-transform: translateX(26px);
+-ms-transform: translateX(26px);
+transform: translateX(26px);
+}
+
+
+.slider.round {
+border-radius: 34px;
+}
+
+.slider.round:before {
+border-radius: 50%;
+} 
+</style>
+{% load i18n %}
+<div class="row" ng-controller="CartList">
+  <div class="col-md-3">
+      <div id="react-apps-list"></div>
+    <resource-cart></resource-cart>
+    <div class="row">
+      <div class="col-xs-12">
+        {% block bulk_perms_button %}
+        <div class="btn-group btn-group-justified" role="group" aria-label="tools">
+          {% if request.user.is_authenticated %}
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default" ng-disabled="!cart.getCart().items.length" data-toggle="modal" data-target="#_bulk_permissions">{% trans "Set permissions" %}</button>
+          </div>
+          {% endif %}
+        </div>
+        {% endblock %}
+
+        <!-- <div class="selections">
+            {% trans "Filters" %}
+            <a href="." id="clear-search" class="pull-right">{% trans "Clear" %}</a>
+        </div>
+            {% if SEARCH_FILTERS.TEXT_ENABLED %}
+              {% include "search/_text_filter.html" %}
+            {% endif  %}
+        <div id="slide-pane">
+            {% include "search/_general_filters.html" %}
+        </div> -->
+      </div>
+    </div>
+
+  </div>
+  
+  <div class="col-md-9">
+    <div class="col-md-2">
+      <span>Total: </span>
+      <span ng-bind="total_counts"></span>
+    </div>
+    {% include "search/_sort_filters.html" %}
+    <div style=" margin-right:10px" class="pull-right"><span>rows</span>
+      <label class="switch">
+        <label for="">card</label>
+          <input type="checkbox" ng-model="value" >
+          <span class="slider round"></span> 
+       
+        </label> <span>cards</span>
+        </div> 
+
+
+      
+
+    <div class="col-md-12 grid-spacer">
+        <div style="text-align:center" ng-if="loading"><i class="fa fa-spinner fa-spin fa-5x"></i></div>
+    <div ng-if="!value">{% include 'app_instance/_resourcebase_snippet.html' %}</div>
+   <div ng-if="value" >{%include 'app_instance/_resourcebase_snippet_card.html' %} </div>
+    {% include 'search/_pagination.html' %}
+    </div>
+  </div>
+  {% include "_bulk_permissions_form.html" %}
+</div>

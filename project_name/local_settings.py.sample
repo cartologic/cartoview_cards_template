@@ -1,0 +1,20 @@
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': 'cartoview',
+        'USER': 'postgres',
+        'PASSWORD': 'clogic',
+        'PORT' : '5432',
+        'HOST' : 'postgis',
+     },
+    # vector datastore for uploads
+    'datastore' : {
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': 'cartoview_datastore',
+        'USER' : 'postgres',
+        'PASSWORD' : 'clogic',
+        'HOST' : 'postgis',
+        'PORT' : '5432',
+    }
+}
+LAYER_PREVIEW_LIBRARY="geoext"
