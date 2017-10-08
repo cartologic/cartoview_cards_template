@@ -87,3 +87,9 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+project_name/static/vendor/
+
+.DS_STORE
+
+node_modules/
