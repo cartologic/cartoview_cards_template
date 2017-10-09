@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import {createMuiTheme} from 'material-ui/styles'
 
-import ResourcesCardsView from './cardsView.jsx'
+import ResourcesCardsView from './components/cardsView.jsx'
 
 export default class App extends React.Component{
   constructor(props) {
@@ -10,8 +11,13 @@ export default class App extends React.Component{
   }
 
   render() {
+    const theme = createMuiTheme({
+      palette: {
+        type: 'light'
+      }
+    });
     return (
-      <MuiThemeProvider>
+      <MuiThemeProvider theme={theme}>      
         <ResourcesCardsView
           title={'Layers'}
           resources_url={urls.LAYERS_API_URL}

@@ -15,12 +15,12 @@ import OpenIcon from 'material-ui-icons/OpenInBrowser'
 import ShareIcon from 'material-ui-icons/Share';
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
 
-import SimpleSnackbar from './copySnake.jsx'
+import SimpleSnackbar from './copySnakeBar.jsx'
 
 
 const styles = theme => ({
   card: {
-    maxWidth: 400,
+    maxWidth: '100%',
   },
   media: {
     height: 194,

@@ -13,10 +13,13 @@ import MenuIcon from 'material-ui-icons/Menu';
 import ChevronLeftIcon from 'material-ui-icons/ChevronLeft';
 import List, {ListItem, ListItemIcon, ListItemText} from 'material-ui/List'
 import GridIcon from 'material-ui-icons/GridOn'
+import Hidden from 'material-ui/Hidden';
 
 import ResourceCard from './resourceCard.jsx'
 
 import Grid from 'material-ui/Grid';
+
+import '../css/style.css'
 
 const drawerWidth = 240;
 
@@ -25,13 +28,13 @@ const styles = theme => ({
     width: '100%',
     // height: 'auto', marginTop: theme.spacing.unit * 3,
     zIndex: 1,
-    overflow: 'hidden'
+    // overflow: 'overlay'
   },
   appFrame: {
     position: 'relative',
     display: 'flex',
     width: '100%',
-    // height: 'auto',
+    // height: '100%'
   },
   rootGrid: {
     flexGrow: 1
@@ -80,6 +83,13 @@ const styles = theme => ({
   content: {
     width: '100%',
     marginLeft: `-${drawerWidth + 1}px`,
+    [
+      theme
+        .breakpoints
+        .down('lg')
+    ]: {
+      marginLeft: `0px`
+    },
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing.unit * 3,
@@ -89,7 +99,7 @@ const styles = theme => ({
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen
       }),
-    // height: 'calc(100% - 56px)',
+    height: 'calc(100% - 56px)',
     marginTop: 56,
     [
       theme
@@ -141,7 +151,39 @@ class CardsView extends React.Component {
 
   render() {
     const {classes} = this.props;
-
+    const drawer = (
+      <div className={classes.drawerInner}>
+        <div className={classes.drawerHeader}>
+          <IconButton onClick={() => {
+            this.handleDrawerClose()
+          }}>
+            <ChevronLeftIcon/>
+          </IconButton>
+        </div>
+        <Divider/>
+        <List>
+          <ListItem onClick={() => window.location.href = urls.MAPS_URL} button>
+            <ListItemIcon>
+              <MapIcon/>
+            </ListItemIcon>
+            <ListItemText primary={"Maps"}/>
+          </ListItem>
+          <ListItem onClick={() => window.location.href = urls.LAYERS_URL} button>
+            <ListItemIcon>
+              <MapIcon/>
+            </ListItemIcon>
+            <ListItemText primary={"Layers"}/>
+          </ListItem>
+          <Divider/>
+          <ListItem onClick={() => window.location.href = urls.APPS_URL} button>
+            <ListItemIcon>
+              <GridIcon/>
+            </ListItemIcon>
+            <ListItemText primary={"Apps"}/>
+          </ListItem>
+        </List>
+      </div>
+    );
     return (
       <div className={classes.root}>
         <div className={classes.appFrame}>
@@ -162,45 +204,28 @@ class CardsView extends React.Component {
               </Typography>
             </Toolbar>
           </AppBar>
-          <Drawer
-            type="persistent"
-            classes={{
-            paper: classes.drawerPaper
-          }}
-            open={this.state.open}>
-            <div className={classes.drawerInner}>
-              <div className={classes.drawerHeader}>
-                <IconButton
-                  onClick={() => {
-                  this.handleDrawerClose()
-                }}>
-                  <ChevronLeftIcon/>
-                </IconButton>
-              </div>
-              <Divider/>
-              <List>
-                <ListItem onClick={() => window.location.href = urls.MAPS_URL} button>
-                  <ListItemIcon>
-                    <MapIcon/>
-                  </ListItemIcon>
-                  <ListItemText primary={"Maps"}/>
-                </ListItem>
-                <ListItem onClick={() => window.location.href = urls.LAYERS_URL} button>
-                  <ListItemIcon>
-                    <MapIcon/>
-                  </ListItemIcon>
-                  <ListItemText primary={"Layers"}/>
-                </ListItem>
-                <Divider/>
-                <ListItem onClick={() => window.location.href = urls.APPS_URL} button>
-                  <ListItemIcon>
-                    <GridIcon/>
-                  </ListItemIcon>
-                  <ListItemText primary={"Apps"}/>
-                </ListItem>
-              </List>
-            </div>
-          </Drawer>
+          <Hidden mdDown>
+            <Drawer
+              type="persistent"
+              classes={{
+              paper: classes.drawerPaper
+            }}
+              open={this.state.open}>
+              {drawer}
+            </Drawer>
+          </Hidden>
+
+          <Hidden lgUp>
+            <Drawer
+              className='myClass'
+              type="temperory"
+              classes={{
+              paper: classes.drawerPaper
+            }}
+              open={this.state.open}>
+              {drawer}
+            </Drawer>
+          </Hidden>
           <main
             className={classNames(classes.content, this.state.open && classes.contentShift)}>
             <Grid container direction={"row"} className={classes.rootGrid} spacing={16}>
@@ -209,7 +234,14 @@ class CardsView extends React.Component {
                 .resources
                 .map((resource, i) => {
                   return (
-                    <Grid key={i} item xs={12} sm={6} md={3} lg={3}>
+                    <Grid
+                      item
+                      xs={12}
+                      sm={6}
+                      md={3}
+                      lg={3}
+                      key={i}
+                      >
                       <ResourceCard
                         id={resource.id}
                         owner={resource.owner__username || resource.owner}
