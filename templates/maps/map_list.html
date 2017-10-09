@@ -1,25 +1,12 @@
+{% extends 'cards_base.html' %}
 {% load static %}
-<html>
 
-<head></head>
 
-<body>
-  <div id='app'></div>
-  <script src="{% static 'cardsjs-lib/dist/maps.entry.js' %}"></script>
+{% block extra_script %}
+<script src="{% static 'cardsjs-lib/dist/maps.entry.js' %}"></script>  
+<script type="text/javascript">
+  var app = React.createElement(App);
+  ReactDOM.render(app, document.getElementById("app"));
+</script>
+{% endblock %}
 
-  <script type="text/javascript">
-    const urls = {
-      LAYERS_URL:'/layers/',
-      MAPS_URL:'/maps/',
-      APPS_URL:'/apps/appinstances/',
-      LAYERS_API_URL:'/api/layers/',
-      MAPS_API_URL:'/api/maps/',
-      APP_INSTANCES_API_URL:'/api/appinstances/',
-      APP_API_URL:'/api/app /',
-    }
-    var app = React.createElement(App);
-    ReactDOM.render(app, document.getElementById("app"));
-  </script>
-</body>
-
-</html>
