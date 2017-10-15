@@ -1,3 +1,9 @@
 .myClass{
   width: 240px !important
 }
+
+.user_avatar:hover{
+  background-color: #fff !important;
+  color: black !important;
+  cursor: pointer
+}

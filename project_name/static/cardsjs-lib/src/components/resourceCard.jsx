@@ -20,12 +20,13 @@ import SimpleSnackbar from './copySnakeBar.jsx'
 
 const styles = theme => ({
   card: {
-    maxWidth: '100%',
+    maxWidth: '100%'
   },
   media: {
-    height: 194,
+    height: '120px',
   },
   expand: {
+    margin:'auto',  
     transform: 'rotate(0deg)',
     transition: theme.transitions.create('transform', {
       duration: theme.transitions.duration.shortest,
@@ -40,6 +41,10 @@ const styles = theme => ({
   flexGrow: {
     flex: '1 1 auto',
   },
+  title: {
+    width: '150px',
+    wordWrap: 'break-word',
+  }
 });
 
 class ResourceCard extends React.Component {
@@ -60,25 +65,22 @@ class ResourceCard extends React.Component {
     return (
       <div>
         <Card className={classes.card}>
+
+          <CardMedia
+            className={classes.media}
+            image={thumbnail_url}
+          />
           <CardHeader
+            className={classes.cardHeader}  
             avatar={
               <Avatar aria-label="Recipe" className={classes.avatar}>
                 {owner[0].toUpperCase()}
               </Avatar>
             }
-            title={title}
+            title={<div className={classes.title}>{title}</div>}
             subheader={new Date(date).toDateString()}
           />
-          <CardMedia
-            className={classes.media}
-            image={thumbnail_url}
-          />
           <CardActions disableActionSpacing>
-            <IconButton aria-label="Add to favorites" onClick={()=>window.location.href=detail_url}>
-              <OpenIcon />
-            </IconButton>
-            <SimpleSnackbar detail_url={detail_url}/>            
-            <div className={classes.flexGrow} />
             <IconButton
               className={classnames(classes.expand, {
                 [classes.expandOpen]: this.state.expanded,
@@ -110,6 +112,7 @@ class ResourceCard extends React.Component {
                   </Button>
                 </Grid>
               </Grid>
+            <SimpleSnackbar detail_url={detail_url}/>                          
             </CardContent>
           </Collapse>
         </Card>

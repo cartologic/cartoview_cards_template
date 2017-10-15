@@ -4,16 +4,12 @@ var path = require('path');
 var BUILD_DIR = path.resolve(__dirname, 'dist/');
 var APP_DIR = path.resolve(__dirname, 'src/');
 
-let layersjsx = APP_DIR + '/layers.jsx'
-let mapsjsx = APP_DIR + '/maps.jsx'
-let appsjsx = APP_DIR + '/apps.jsx'
+let materialJSX = APP_DIR + '/materialPages.jsx'
 
 var config = {
   context: __dirname,
   entry: {
-    layers: layersjsx,
-    maps: mapsjsx,
-    apps: appsjsx
+    materialComponent: materialJSX,
   },
   module: {
     loaders: [

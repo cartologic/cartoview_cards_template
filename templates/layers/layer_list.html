@@ -3,9 +3,13 @@
 
 
 {% block extra_script %}
-<script src="{% static 'cardsjs-lib/dist/layers.entry.js' %}"></script>  
+
 <script type="text/javascript">
-  var app = React.createElement(App);
+  const props = {
+    title: 'Layers',
+    resources_url: urls.LAYERS_API_URL
+  }
+  var app = React.createElement(MaterialComponent, props);
   ReactDOM.render(app, document.getElementById("app"));
 </script>
 {% endblock %}

@@ -13,10 +13,24 @@
 </head>
 
 <body>
-
   <div id='app'></div>
   {% block body %} {% endblock %}
   <script type="text/javascript">
+    function getCookie(name) {
+      var cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+          var cookie = cookies[i].trim();
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
+    const CSRF_TOKEN = getCookie('csrftoken');
     const urls = {
       LAYERS_URL: '/layers/',
       MAPS_URL: '/maps/',
@@ -26,7 +40,14 @@
       APP_INSTANCES_API_URL: '/api/appinstances/',
       APP_API_URL: '/api/app /',
     }
+    {% if request.user.is_authenticated %}
+      const user_logged_in = true
+      const user_name = '{{request.user}}'
+    {% else %}
+      const user_logged_in = false
+    {% endif %}
   </script>
+  <script src='{% static "cardsjs-lib/dist/materialComponent.entry.js" %}'></script>
   {% block extra_script %} {% endblock %}
 </body>
 

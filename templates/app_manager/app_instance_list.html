@@ -3,9 +3,12 @@
 
 
 {% block extra_script %}
-<script src="{% static 'cardsjs-lib/dist/apps.entry.js' %}"></script>  
 <script type="text/javascript">
-  var app = React.createElement(App);
+  const props = {
+    title: 'Apps',
+    resources_url: urls.APP_INSTANCES_API_URL
+  }
+  var app = React.createElement(MaterialComponent, props);
   ReactDOM.render(app, document.getElementById("app"));
 </script>
 {% endblock %}
