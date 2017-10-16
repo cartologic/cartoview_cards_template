@@ -24,6 +24,7 @@ import TemporaryDrawer from './temporaryDrawer.jsx'
 import {default as LoginDialog} from './loginDialog.jsx'
 import {default as Logout} from './userAvatar.jsx'
 import {default as LogoutDrawerButton} from './logoutDialogDrawer.jsx'
+import {default as SearchBar} from './searchBar.jsx'
 
 import '../css/style.css'
 
@@ -151,19 +152,36 @@ const styles = theme => {
   });
 }
 
-
 class CardsView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: false
+      open: false,
     };
   }
 
-  getResources() {
-    fetch(this.props.resources_url, {credentials: 'include'}).then((response) => response.json()).then((data) => {
-      this.setState({resources: data.objects})
+  getSuggestions() {
+    let suggestions = this.state.resources.map((r, i) => {
+      return {label: r.title}
     })
+    return suggestions
+  }
+
+  getResources() {
+    fetch(this.props.resources_url, { credentials: 'include' })
+      .then((response) => response.json())
+      .then((data) => {
+      this.setState({ resources: data.objects })
+    })
+  }
+
+  searchResources(value) {
+    let url = `${this.props.resources_url}?&title__icontains=${value}`
+    fetch(url, { credentials: 'include' })
+    .then((response) => response.json())
+    .then((data) => {
+    this.setState({ resources: data.objects })
+  })
   }
 
   componentWillMount() {
@@ -179,7 +197,8 @@ class CardsView extends React.Component {
   };
 
   render() {
-    const {classes} = this.props;
+    const { classes } = this.props;
+    const SearchBarSuggestions = this.state.SearchBarSuggestions
     const drawer = (
       <div className={classes.drawerInner}>
         <div className={classes.drawerHeader}>
@@ -232,6 +251,13 @@ class CardsView extends React.Component {
               <Typography type="title" color="inherit" className={classes.title} noWrap>
                 {this.props.title}
               </Typography>
+              
+              {
+                this.state.resources &&
+                <SearchBar
+                  getSuggestions={() => this.getSuggestions()}
+                  searchResources={(searchValue)=>{this.searchResources(searchValue)}} />
+              }
               
               <LoginDialog />
 
