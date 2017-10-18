@@ -213,7 +213,7 @@ class FullScreenDialog extends React.Component {
 
                 <div className={classes.dateRoot}>
                   <Typography type="subheading" color="inherit" className={classes.dateTitle} align={'center'}>
-                    'By Date'
+                    {'By Date'}
                   </Typography>  
                   <div className={classes.DatePickersContainer}>
                     <FromDatePicker

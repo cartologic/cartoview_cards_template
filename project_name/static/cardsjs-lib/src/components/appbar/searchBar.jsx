@@ -125,7 +125,7 @@ class IntegrationAutosuggest extends React.Component {
   }
 
   componentWillMount() {
-    suggestions = this.props.getSuggestions()
+    // suggestions = this.props.getSuggestions()
   }
 
   handleSuggestionsFetchRequested({ value }) {

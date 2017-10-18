@@ -16,11 +16,15 @@ const styles = theme => ({
 class DatePickers extends React.Component{
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      value: this.props.value ? this.props.value : ""
+    };
   }
 
   handleChange(dateValue) {
-    this.props.handleDateChange(dateValue)
+    this.setState({ value: dateValue }, () => {
+      this.props.handleDateChange(dateValue)
+    })
   }
 
   render() {
@@ -30,10 +34,9 @@ class DatePickers extends React.Component{
         label={this.props.label}
         InputLabelProps={{shrink:true}}  
         type="date"
-        defaultValue="2017-01-01"
         className={classes.textField}
         onChange={(e) => { this.handleChange(e.target.value) }}
-        value={this.props.value && this.props.value}  
+        value={this.state.value}  
         />
     )
   }

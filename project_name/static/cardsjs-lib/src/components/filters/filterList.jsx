@@ -70,20 +70,20 @@ class CheckboxList extends React.Component {
           {this.props.title}
         </Typography>  
         <List className={classes.list}>
-          {items.map((value, index) => (
+          {items.map((item, index) => (
             <ListItem
               key={index}
               dense
               button
-              onClick={()=>{this.handleToggle(value)}}
+              onClick={()=>{this.handleToggle(item.apiValue)}}
               className={classes.listItem}
             >
               <Checkbox
-                checked={this.state.checked.indexOf(value) !== -1}
+                checked={this.state.checked.indexOf(item.apiValue) !== -1}
                 tabIndex={-1}
                 disableRipple
               />
-              <ListItemText primary={value} />
+              <ListItemText primary={item.value} />
             </ListItem>
           ))}
         </List>
