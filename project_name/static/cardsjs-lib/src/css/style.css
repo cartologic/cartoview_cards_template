@@ -7,3 +7,40 @@
   color: black !important;
   cursor: pointer
 }
+
+.filtersContainer{
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+
+  flex-flow: row wrap;
+  justify-content: center;
+
+  margin: 15 auto;
+  max-width: 90%;
+  width: max-content;
+}
+
+/* @media screen and (max-width: 1115px){
+  .filtersContainer{
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+
+    flex-flow: 'row wrap';
+    justify-content: center !important;
+
+    margin: 15 auto;
+    max-width: 90%;
+    width: max-content;
+  }
+} */
+
+
+
+
+

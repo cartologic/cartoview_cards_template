@@ -16,11 +16,11 @@ import List, {ListItem, ListItemIcon, ListItemText} from 'material-ui/List'
 import GridIcon from 'material-ui-icons/GridOn'
 import Hidden from 'material-ui/Hidden';
 import Grid from 'material-ui/Grid';
-import FullScreenDialog from './filtersFullScreen.jsx'
 
 import ResourceCard from './resourceCard.jsx'
 
 import TemporaryDrawer from './temporaryDrawer.jsx'
+import {default as FiltersDialog} from './filtersFullScreen.jsx'
 import {default as LoginDialog} from './loginDialog.jsx'
 import {default as Logout} from './userAvatar.jsx'
 import {default as LogoutDrawerButton} from './logoutDialogDrawer.jsx'
@@ -172,16 +172,67 @@ class CardsView extends React.Component {
       .then((response) => response.json())
       .then((data) => {
       this.setState({ resources: data.objects })
-    })
+      })
+    
+    let categories = []
+    fetch(urls.CATEGORIES_API_URL, { credentials: 'include' })
+      .then((response) => response.json())
+      .then((data) => {
+        categories = data.objects.map((o, i) => {
+          return o.gn_description_en
+        }) 
+      })
+      .then(()=>{this.setState({categories})})
+    
+    let keywords = []
+    fetch(urls.KEYWORDS_API_URL, { credentials: 'include' })
+      .then((response) => response.json())
+      .then((data) => {
+        keywords = data.objects.map((o, i) => {
+          return o.name
+        })
+      })
+      .then(() => { this.setState({ keywords }) })
+    
+    let owners = []
+    fetch(urls.OWNERS_API_URL, { credentials: 'include' })
+      .then((response) => response.json())
+      .then((data) => {
+        owners = data.objects.map((o, i) => {
+          return o.username
+        }) 
+      })
+      .then(()=>{this.setState({owners})})
+      
   }
 
   searchResources(value) {
-    let url = `${this.props.resources_url}?&title__icontains=${value}`
+    if (value == '') this.applyFilters()
+    else {
+      let url = `${this.props.resources_url}?&title__icontains=${value}`
+      fetch(url, { credentials: 'include' })
+      .then((response) => response.json())
+      .then((data) => {
+        this.setState({ resources: data.objects })
+      }) 
+    }
+  }
+
+  setParamsString(paramsString) {
+    this.setState({ paramsString }, () => {
+      this.applyFilters()
+    })
+  }
+
+  applyFilters() {
+    let url = this.state.paramsString
+      ? `${this.props.resources_url}?${this.state.paramsString}`
+      : `${this.props.resources_url}`
     fetch(url, { credentials: 'include' })
     .then((response) => response.json())
     .then((data) => {
-    this.setState({ resources: data.objects })
-  })
+      this.setState({ resources: data.objects })
+    })
   }
 
   componentWillMount() {
@@ -248,9 +299,21 @@ class CardsView extends React.Component {
                 className={classNames(classes.menuButton, this.state.open && classes.hide)}>
                 <MenuIcon/>
               </IconButton>
-              <Typography type="title" color="inherit" className={classes.title} noWrap>
+              <Typography type="headline" color="inherit" className={classes.title} noWrap>
                 {this.props.title}
               </Typography>
+
+              {
+                this.state.categories &&
+                this.state.keywords &&
+                this.state.owners &&
+                <FiltersDialog
+                  keywords={this.state.keywords}
+                  categories={this.state.categories}
+                  owners={this.state.owners}
+                  applyFilters={(paramsString)=>{this.setParamsString(paramsString)}}
+                />
+              }
               
               {
                 this.state.resources &&
