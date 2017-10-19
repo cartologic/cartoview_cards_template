@@ -6,25 +6,28 @@ import classNames from 'classnames';
 import Grid from 'material-ui/Grid';
 
 import {default as ResourceCard} from './resourceCard.jsx'
+import {default as SingleCard} from './singleCard.jsx'
 
 const styles = theme => ({
   rootGrid: {
     margin: 'auto',
-    [theme.breakpoints.up('md')]: {
-      width: '1000px',
-      margin: 'auto'
+    width: '95%',
+    justifyContent: 'center',
+    [theme.breakpoints.down('lg')]: {
+      justifyContent: 'center',
+      width: '95%',
     },
-    [theme.breakpoints.up('lg')]: {
-      width: '1250px',
-      margin: 'auto'
-    },
+    // [theme.breakpoints.up('lg')]: {
+    //   width: '1250px',
+    //   margin: 'auto'
+    // },
   },
   gridCell: {
     [theme.breakpoints.up('md')]: {
-      maxWidth: '250px',
+      maxWidth: 'max-content',
     },
     [theme.breakpoints.down('md')]: {
-      maxWidth: '100%',
+      maxWidth: 'max-content',
       margin: 'auto'
     },
   },
@@ -61,15 +64,23 @@ class CardsGrid extends React.Component {
             lg={3}
             key={i}
             className={classes.gridCell}
-            >
-            <ResourceCard
+          >
+            <SingleCard
               id={resource.id}
               owner={resource.owner__username || resource.owner}
               title={resource.title}
               thumbnail_url={resource.thumbnail_url}
               date={resource.date}
               abstract={resource.abstract}
-              detail_url={resource.detail_url}/>
+              detail_url={resource.detail_url}/>  
+            {/* <ResourceCard
+              id={resource.id}
+              owner={resource.owner__username || resource.owner}
+              title={resource.title}
+              thumbnail_url={resource.thumbnail_url}
+              date={resource.date}
+              abstract={resource.abstract}
+              detail_url={resource.detail_url}/> */}
           </Grid>
         )
       })
@@ -81,6 +92,8 @@ class CardsGrid extends React.Component {
     return (
       <Grid container direction={"row"} className={classes.rootGrid} spacing={8}>
         {this.state.resources && this.renderCards(classes)}
+        {/* <hr />
+        <SingleCard /> */}
       </Grid>
     );
   }
