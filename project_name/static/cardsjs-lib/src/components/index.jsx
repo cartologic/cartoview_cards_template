@@ -25,7 +25,8 @@ const styles = theme => {
       position: 'relative',
       display: 'flex',
       width: '100%',
-      // height: '100%'
+      height: '100%',
+      marginBottom: theme.spacing.unit * 3,
     },
     content: {
       width: '100%',
@@ -39,7 +40,7 @@ const styles = theme => {
       },
       flexGrow: 1,
       backgroundColor: theme.palette.background.default,
-      padding: theme.spacing.unit * 3,
+      paddingTop: theme.spacing.unit * 3,
       transition: theme
         .transitions
         .create('margin', {

@@ -37291,15 +37291,16 @@ var styles = function styles(theme) {
     appFrame: {
       position: 'relative',
       display: 'flex',
-      width: '100%'
-      // height: '100%'
+      width: '100%',
+      height: '100%',
+      marginBottom: theme.spacing.unit * 3
     },
     content: (_content = {
       width: '100%',
       marginLeft: '-' + (drawerWidth + 1) + 'px'
     }, _defineProperty(_content, theme.breakpoints.down('lg'), {
       marginLeft: '0px'
-    }), _defineProperty(_content, 'flexGrow', 1), _defineProperty(_content, 'backgroundColor', theme.palette.background.default), _defineProperty(_content, 'padding', theme.spacing.unit * 3), _defineProperty(_content, 'transition', theme.transitions.create('margin', {
+    }), _defineProperty(_content, 'flexGrow', 1), _defineProperty(_content, 'backgroundColor', theme.palette.background.default), _defineProperty(_content, 'paddingTop', theme.spacing.unit * 3), _defineProperty(_content, 'transition', theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
     })), _defineProperty(_content, 'marginTop', 56), _defineProperty(_content, theme.breakpoints.up('sm'), {
@@ -42763,19 +42764,34 @@ var _copyToClipboard = __webpack_require__(376);
 
 var _copyToClipboard2 = _interopRequireDefault(_copyToClipboard);
 
+var _ContentCopy = __webpack_require__(468);
+
+var _ContentCopy2 = _interopRequireDefault(_ContentCopy);
+
+var _Typography = __webpack_require__(26);
+
+var _Typography2 = _interopRequireDefault(_Typography);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /* eslint-disable flowtype/require-valid-file-annotation */
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var styles = function styles(theme) {
   return {
+    root: { display: 'inline-flex' },
     close: {
       width: theme.spacing.unit * 4,
       height: theme.spacing.unit * 4
+    },
+    iconButton: {
+      display: 'inline-flex'
+    },
+    actionsTyping: {
+      fontSize: '13px !important'
     }
   };
 };
@@ -42818,13 +42834,21 @@ var SimpleSnackbar = function (_React$Component) {
 
       return _react2.default.createElement(
         'div',
-        null,
+        { className: classes.root },
         _react2.default.createElement(
           _IconButton2.default,
-          { 'aria-label': 'Share', onClick: function onClick() {
+          {
+            onClick: function onClick() {
               (0, _copyToClipboard2.default)(String(window.location.origin + _this2.props.detail_url));_this2.handleClick();
-            } },
-          _react2.default.createElement(_Share2.default, null)
+            },
+            className: classes.iconButton,
+            'aria-label': 'Delete' },
+          _react2.default.createElement(_ContentCopy2.default, null),
+          _react2.default.createElement(
+            _Typography2.default,
+            { type: 'body2', color: 'secondary', className: classes.actionsTyping },
+            'URL'
+          )
         ),
         _react2.default.createElement(_Snackbar2.default, {
           anchorOrigin: {
@@ -53330,6 +53354,10 @@ var _resourceCard = __webpack_require__(167);
 
 var _resourceCard2 = _interopRequireDefault(_resourceCard);
 
+var _singleCard = __webpack_require__(462);
+
+var _singleCard2 = _interopRequireDefault(_singleCard);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -53341,22 +53369,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var styles = function styles(theme) {
-  var _rootGrid, _gridCell;
+  var _gridCell;
 
   return {
-    rootGrid: (_rootGrid = {
-      margin: 'auto'
-    }, _defineProperty(_rootGrid, theme.breakpoints.up('md'), {
-      width: '1000px',
-      margin: 'auto'
-    }), _defineProperty(_rootGrid, theme.breakpoints.up('lg'), {
-      width: '1250px',
-      margin: 'auto'
-    }), _rootGrid),
+    rootGrid: _defineProperty({
+      margin: 'auto',
+      width: '95%',
+      justifyContent: 'center'
+    }, theme.breakpoints.down('lg'), {
+      justifyContent: 'center',
+      width: '95%'
+    }),
     gridCell: (_gridCell = {}, _defineProperty(_gridCell, theme.breakpoints.up('md'), {
-      maxWidth: '250px'
+      maxWidth: 'max-content'
     }), _defineProperty(_gridCell, theme.breakpoints.down('md'), {
-      maxWidth: '100%',
+      maxWidth: 'max-content',
       margin: 'auto'
     }), _gridCell)
   };
@@ -53400,7 +53427,7 @@ var CardsGrid = function (_React$Component) {
             key: i,
             className: classes.gridCell
           },
-          _react2.default.createElement(_resourceCard2.default, {
+          _react2.default.createElement(_singleCard2.default, {
             id: resource.id,
             owner: resource.owner__username || resource.owner,
             title: resource.title,
@@ -54027,6 +54054,471 @@ module.exports = function (css) {
 	return fixedCss;
 };
 
+
+/***/ }),
+/* 462 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(0);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _styles = __webpack_require__(17);
+
+var _Card = __webpack_require__(347);
+
+var _Card2 = _interopRequireDefault(_Card);
+
+var _IconButton = __webpack_require__(41);
+
+var _IconButton2 = _interopRequireDefault(_IconButton);
+
+var _Typography = __webpack_require__(26);
+
+var _Typography2 = _interopRequireDefault(_Typography);
+
+var _SkipPrevious = __webpack_require__(463);
+
+var _SkipPrevious2 = _interopRequireDefault(_SkipPrevious);
+
+var _PlayArrow = __webpack_require__(464);
+
+var _PlayArrow2 = _interopRequireDefault(_PlayArrow);
+
+var _SkipNext = __webpack_require__(465);
+
+var _SkipNext2 = _interopRequireDefault(_SkipNext);
+
+var _Launch = __webpack_require__(466);
+
+var _Launch2 = _interopRequireDefault(_Launch);
+
+var _Details = __webpack_require__(467);
+
+var _Details2 = _interopRequireDefault(_Details);
+
+var _ContentCopy = __webpack_require__(468);
+
+var _ContentCopy2 = _interopRequireDefault(_ContentCopy);
+
+var _copySnakeBar = __webpack_require__(372);
+
+var _copySnakeBar2 = _interopRequireDefault(_copySnakeBar);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var styles = function styles(theme) {
+  return {
+    card: {
+      display: 'flex'
+    },
+    details: {
+      display: 'flex',
+      flexDirection: 'column',
+      width: 200,
+      maxWidth: 200
+    },
+    content: {
+      flex: '1 0 auto',
+      padding: 10
+    },
+    username: {
+      fontWeight: 'bolder'
+    },
+    contentActions: {
+      flex: '1 0 auto',
+      padding: '0 0 0 10 !important'
+    },
+    actionsTyping: {
+      fontSize: '13px !important'
+    },
+    iconButton: {
+      display: 'inline-flex',
+      margin: '0 20 0 0'
+    },
+    cover: {
+      width: 140,
+      maxWidth: 140,
+      height: 140,
+      maxHeight: 140,
+      backgroundSize: 'contain'
+    },
+    controls: {
+      display: 'flex',
+      alignItems: 'center',
+      paddingLeft: theme.spacing.unit,
+      paddingBottom: theme.spacing.unit
+    },
+    playIcon: {
+      height: 38,
+      width: 38
+    }
+  };
+};
+
+function MediaControlCard(props) {
+  var classes = props.classes,
+      theme = props.theme;
+  var id = props.id,
+      owner = props.owner,
+      title = props.title,
+      date = props.date,
+      thumbnail_url = props.thumbnail_url,
+      abstract = props.abstract,
+      detail_url = props.detail_url;
+
+
+  return _react2.default.createElement(
+    'div',
+    null,
+    _react2.default.createElement(
+      _Card2.default,
+      { className: classes.card },
+      _react2.default.createElement(_Card.CardMedia, {
+        className: classes.cover,
+        image: thumbnail_url,
+        title: title
+      }),
+      _react2.default.createElement(
+        'div',
+        { className: classes.details },
+        _react2.default.createElement(
+          _Card.CardContent,
+          { className: classes.content },
+          _react2.default.createElement(
+            _Typography2.default,
+            { type: 'body1', noWrap: true },
+            title
+          ),
+          _react2.default.createElement(
+            _Typography2.default,
+            { type: 'body2', color: 'secondary' },
+            _react2.default.createElement(
+              'span',
+              { className: classes.username },
+              owner,
+              ' '
+            ),
+            ' | ',
+            new Date(date).toDateString()
+          ),
+          _react2.default.createElement(
+            _Typography2.default,
+            { gutterBottom: true, noWrap: true },
+            abstract
+          )
+        ),
+        _react2.default.createElement(
+          _Card.CardContent,
+          { className: classes.contentActions },
+          _react2.default.createElement(
+            _IconButton2.default,
+            { className: classes.iconButton, 'aria-label': 'Delete', onClick: function onClick() {
+                return window.location.href = detail_url;
+              } },
+            _react2.default.createElement(_Launch2.default, null),
+            ' ',
+            _react2.default.createElement(
+              _Typography2.default,
+              { type: 'body2', color: 'secondary', className: classes.actionsTyping },
+              'Open'
+            )
+          ),
+          _react2.default.createElement(
+            _IconButton2.default,
+            { className: classes.iconButton, 'aria-label': 'Delete', onClick: function onClick() {
+                return window.location.href = detail_url;
+              } },
+            _react2.default.createElement(_Details2.default, null),
+            ' ',
+            _react2.default.createElement(
+              _Typography2.default,
+              { type: 'body2', color: 'secondary', className: classes.actionsTyping },
+              'Details'
+            )
+          ),
+          _react2.default.createElement(_copySnakeBar2.default, { detail_url: detail_url, className: classes.iconButton })
+        )
+      )
+    )
+  );
+}
+
+MediaControlCard.propTypes = {
+  classes: _propTypes2.default.object.isRequired,
+  theme: _propTypes2.default.object.isRequired
+};
+
+exports.default = (0, _styles.withStyles)(styles, { withTheme: true })(MediaControlCard);
+
+/***/ }),
+/* 463 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(global) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _pure = __webpack_require__(23);
+
+var _pure2 = _interopRequireDefault(_pure);
+
+var _SvgIcon = __webpack_require__(14);
+
+var _SvgIcon2 = _interopRequireDefault(_SvgIcon);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var SvgIconCustom = global.__MUI_SvgIcon__ || _SvgIcon2.default;
+
+var _ref = _react2.default.createElement('path', { d: 'M6 6h2v12H6zm3.5 6l8.5 6V6z' });
+
+var SkipPrevious = function SkipPrevious(props) {
+  return _react2.default.createElement(
+    SvgIconCustom,
+    props,
+    _ref
+  );
+};
+
+SkipPrevious = (0, _pure2.default)(SkipPrevious);
+SkipPrevious.muiName = 'SvgIcon';
+
+exports.default = SkipPrevious;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15)))
+
+/***/ }),
+/* 464 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(global) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _pure = __webpack_require__(23);
+
+var _pure2 = _interopRequireDefault(_pure);
+
+var _SvgIcon = __webpack_require__(14);
+
+var _SvgIcon2 = _interopRequireDefault(_SvgIcon);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var SvgIconCustom = global.__MUI_SvgIcon__ || _SvgIcon2.default;
+
+var _ref = _react2.default.createElement('path', { d: 'M8 5v14l11-7z' });
+
+var PlayArrow = function PlayArrow(props) {
+  return _react2.default.createElement(
+    SvgIconCustom,
+    props,
+    _ref
+  );
+};
+
+PlayArrow = (0, _pure2.default)(PlayArrow);
+PlayArrow.muiName = 'SvgIcon';
+
+exports.default = PlayArrow;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15)))
+
+/***/ }),
+/* 465 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(global) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _pure = __webpack_require__(23);
+
+var _pure2 = _interopRequireDefault(_pure);
+
+var _SvgIcon = __webpack_require__(14);
+
+var _SvgIcon2 = _interopRequireDefault(_SvgIcon);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var SvgIconCustom = global.__MUI_SvgIcon__ || _SvgIcon2.default;
+
+var _ref = _react2.default.createElement('path', { d: 'M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z' });
+
+var SkipNext = function SkipNext(props) {
+  return _react2.default.createElement(
+    SvgIconCustom,
+    props,
+    _ref
+  );
+};
+
+SkipNext = (0, _pure2.default)(SkipNext);
+SkipNext.muiName = 'SvgIcon';
+
+exports.default = SkipNext;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15)))
+
+/***/ }),
+/* 466 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(global) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _pure = __webpack_require__(23);
+
+var _pure2 = _interopRequireDefault(_pure);
+
+var _SvgIcon = __webpack_require__(14);
+
+var _SvgIcon2 = _interopRequireDefault(_SvgIcon);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var SvgIconCustom = global.__MUI_SvgIcon__ || _SvgIcon2.default;
+
+var _ref = _react2.default.createElement('path', { d: 'M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z' });
+
+var Launch = function Launch(props) {
+  return _react2.default.createElement(
+    SvgIconCustom,
+    props,
+    _ref
+  );
+};
+
+Launch = (0, _pure2.default)(Launch);
+Launch.muiName = 'SvgIcon';
+
+exports.default = Launch;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15)))
+
+/***/ }),
+/* 467 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(global) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _pure = __webpack_require__(23);
+
+var _pure2 = _interopRequireDefault(_pure);
+
+var _SvgIcon = __webpack_require__(14);
+
+var _SvgIcon2 = _interopRequireDefault(_SvgIcon);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var SvgIconCustom = global.__MUI_SvgIcon__ || _SvgIcon2.default;
+
+var _ref = _react2.default.createElement('path', { d: 'M3 4l9 16 9-16H3zm3.38 2h11.25L12 16 6.38 6z' });
+
+var Details = function Details(props) {
+  return _react2.default.createElement(
+    SvgIconCustom,
+    props,
+    _ref
+  );
+};
+
+Details = (0, _pure2.default)(Details);
+Details.muiName = 'SvgIcon';
+
+exports.default = Details;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15)))
+
+/***/ }),
+/* 468 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(global) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _pure = __webpack_require__(23);
+
+var _pure2 = _interopRequireDefault(_pure);
+
+var _SvgIcon = __webpack_require__(14);
+
+var _SvgIcon2 = _interopRequireDefault(_SvgIcon);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var SvgIconCustom = global.__MUI_SvgIcon__ || _SvgIcon2.default;
+
+var _ref = _react2.default.createElement('path', { d: 'M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z' });
+
+var ContentCopy = function ContentCopy(props) {
+  return _react2.default.createElement(
+    SvgIconCustom,
+    props,
+    _ref
+  );
+};
+
+ContentCopy = (0, _pure2.default)(ContentCopy);
+ContentCopy.muiName = 'SvgIcon';
+
+exports.default = ContentCopy;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15)))
 
 /***/ })
 /******/ ]);
