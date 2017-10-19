@@ -9407,254 +9407,7 @@ module.exports = Symbol;
 
 
 /***/ }),
-/* 167 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = __webpack_require__(0);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _styles = __webpack_require__(17);
-
-var _classnames2 = __webpack_require__(5);
-
-var _classnames3 = _interopRequireDefault(_classnames2);
-
-var _Card = __webpack_require__(347);
-
-var _Card2 = _interopRequireDefault(_Card);
-
-var _Collapse = __webpack_require__(354);
-
-var _Collapse2 = _interopRequireDefault(_Collapse);
-
-var _Avatar = __webpack_require__(57);
-
-var _Avatar2 = _interopRequireDefault(_Avatar);
-
-var _Grid = __webpack_require__(73);
-
-var _Grid2 = _interopRequireDefault(_Grid);
-
-var _IconButton = __webpack_require__(41);
-
-var _IconButton2 = _interopRequireDefault(_IconButton);
-
-var _Typography = __webpack_require__(26);
-
-var _Typography2 = _interopRequireDefault(_Typography);
-
-var _Button = __webpack_require__(22);
-
-var _Button2 = _interopRequireDefault(_Button);
-
-var _red = __webpack_require__(102);
-
-var _red2 = _interopRequireDefault(_red);
-
-var _Favorite = __webpack_require__(360);
-
-var _Favorite2 = _interopRequireDefault(_Favorite);
-
-var _OpenInBrowser = __webpack_require__(370);
-
-var _OpenInBrowser2 = _interopRequireDefault(_OpenInBrowser);
-
-var _Share = __webpack_require__(172);
-
-var _Share2 = _interopRequireDefault(_Share);
-
-var _ExpandMore = __webpack_require__(371);
-
-var _ExpandMore2 = _interopRequireDefault(_ExpandMore);
-
-var _copySnakeBar = __webpack_require__(372);
-
-var _copySnakeBar2 = _interopRequireDefault(_copySnakeBar);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var styles = function styles(theme) {
-  return {
-    card: {
-      maxWidth: '100%'
-    },
-    media: {
-      height: '120px'
-    },
-    expand: {
-      margin: 'auto',
-      transform: 'rotate(0deg)',
-      transition: theme.transitions.create('transform', {
-        duration: theme.transitions.duration.shortest
-      })
-    },
-    expandOpen: {
-      transform: 'rotate(180deg)'
-    },
-    avatar: {
-      backgroundColor: _red2.default[500]
-    },
-    flexGrow: {
-      flex: '1 1 auto'
-    },
-    title: {
-      width: '150px',
-      wordWrap: 'break-word'
-    }
-  };
-};
-
-var ResourceCard = function (_React$Component) {
-  _inherits(ResourceCard, _React$Component);
-
-  function ResourceCard(props) {
-    _classCallCheck(this, ResourceCard);
-
-    var _this = _possibleConstructorReturn(this, (ResourceCard.__proto__ || Object.getPrototypeOf(ResourceCard)).call(this, props));
-
-    _this.state = { expanded: false };
-    return _this;
-  }
-
-  _createClass(ResourceCard, [{
-    key: 'handleExpandClick',
-    value: function handleExpandClick() {
-      this.setState({ expanded: !this.state.expanded });
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var classes = this.props.classes;
-      var _props = this.props,
-          id = _props.id,
-          owner = _props.owner,
-          title = _props.title,
-          date = _props.date,
-          thumbnail_url = _props.thumbnail_url,
-          abstract = _props.abstract,
-          detail_url = _props.detail_url;
-
-
-      return _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(
-          _Card2.default,
-          { className: classes.card },
-          _react2.default.createElement(_Card.CardMedia, {
-            className: classes.media,
-            image: thumbnail_url
-          }),
-          _react2.default.createElement(_Card.CardHeader, {
-            className: classes.cardHeader,
-            avatar: _react2.default.createElement(
-              _Avatar2.default,
-              { 'aria-label': 'Recipe', className: classes.avatar },
-              owner[0].toUpperCase()
-            ),
-            title: _react2.default.createElement(
-              'div',
-              { className: classes.title },
-              title
-            ),
-            subheader: new Date(date).toDateString()
-          }),
-          _react2.default.createElement(
-            _Card.CardActions,
-            { disableActionSpacing: true },
-            _react2.default.createElement(
-              _IconButton2.default,
-              {
-                className: (0, _classnames3.default)(classes.expand, _defineProperty({}, classes.expandOpen, this.state.expanded)),
-                onClick: this.handleExpandClick.bind(this),
-                'aria-expanded': this.state.expanded,
-                'aria-label': 'Show more'
-              },
-              _react2.default.createElement(_ExpandMore2.default, null)
-            )
-          ),
-          _react2.default.createElement(
-            _Collapse2.default,
-            { 'in': this.state.expanded, transitionDuration: 'auto', unmountOnExit: true },
-            _react2.default.createElement(
-              _Card.CardContent,
-              null,
-              _react2.default.createElement(
-                _Typography2.default,
-                { paragraph: true, type: 'body2' },
-                'Description:'
-              ),
-              _react2.default.createElement(
-                _Typography2.default,
-                { paragraph: true },
-                abstract
-              ),
-              _react2.default.createElement(
-                _Grid2.default,
-                { container: true, direction: "row", className: classes.rootGrid, spacing: 16 },
-                _react2.default.createElement(
-                  _Grid2.default,
-                  { item: true, xs: 12, sm: 6, md: 6, lg: 6, className: classes.gridItem },
-                  _react2.default.createElement(
-                    _Button2.default,
-                    { onClick: function onClick() {
-                        return window.location.href = detail_url;
-                      }, color: 'primary', className: classes.button },
-                    'Open'
-                  )
-                ),
-                _react2.default.createElement(
-                  _Grid2.default,
-                  { item: true, xs: 12, sm: 6, md: 6, lg: 6, className: classes.gridItem },
-                  _react2.default.createElement(
-                    _Button2.default,
-                    { onClick: function onClick() {
-                        return window.location.href = detail_url;
-                      }, color: 'accent', className: classes.button },
-                    'Details'
-                  )
-                )
-              ),
-              _react2.default.createElement(_copySnakeBar2.default, { detail_url: detail_url })
-            )
-          )
-        )
-      );
-    }
-  }]);
-
-  return ResourceCard;
-}(_react2.default.Component);
-
-ResourceCard.propTypes = {
-  classes: _propTypes2.default.object.isRequired
-};
-
-exports.default = (0, _styles.withStyles)(styles)(ResourceCard);
-
-/***/ }),
+/* 167 */,
 /* 168 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -37250,10 +37003,6 @@ var _Grid = __webpack_require__(73);
 
 var _Grid2 = _interopRequireDefault(_Grid);
 
-var _resourceCard = __webpack_require__(167);
-
-var _resourceCard2 = _interopRequireDefault(_resourceCard);
-
 var _appBar = __webpack_require__(378);
 
 var _appBar2 = _interopRequireDefault(_appBar);
@@ -41437,232 +41186,7 @@ exports.default = (0, _withStyles2.default)(styles, { name: 'MuiTypography' })(T
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 354 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.styles = undefined;
-
-var _extends2 = __webpack_require__(3);
-
-var _extends3 = _interopRequireDefault(_extends2);
-
-var _objectWithoutProperties2 = __webpack_require__(4);
-
-var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
-
-var _getPrototypeOf = __webpack_require__(8);
-
-var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
-
-var _classCallCheck2 = __webpack_require__(9);
-
-var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-
-var _createClass2 = __webpack_require__(10);
-
-var _createClass3 = _interopRequireDefault(_createClass2);
-
-var _possibleConstructorReturn2 = __webpack_require__(11);
-
-var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
-
-var _inherits2 = __webpack_require__(12);
-
-var _inherits3 = _interopRequireDefault(_inherits2);
-
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _withStyles = __webpack_require__(6);
-
-var _withStyles2 = _interopRequireDefault(_withStyles);
-
-var _Transition = __webpack_require__(20);
-
-var _Transition2 = _interopRequireDefault(_Transition);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var babelPluginFlowReactPropTypes_proptype_Node = __webpack_require__(1).babelPluginFlowReactPropTypes_proptype_Node || __webpack_require__(0).any;
-
-var babelPluginFlowReactPropTypes_proptype_TransitionCallback = __webpack_require__(20).babelPluginFlowReactPropTypes_proptype_TransitionCallback || __webpack_require__(0).any;
-
-var reflow = function reflow(elem) {
-  return elem.offsetHeight;
-};
-
-var styles = exports.styles = function styles(theme) {
-  return {
-    container: {
-      height: 0,
-      overflow: 'hidden',
-      transition: theme.transitions.create('height')
-    },
-    entered: {
-      height: 'auto',
-      transitionDuration: '0ms'
-    }
-  };
-};
-
-var babelPluginFlowReactPropTypes_proptype_Props = {
-  children: typeof babelPluginFlowReactPropTypes_proptype_Node === 'function' ? babelPluginFlowReactPropTypes_proptype_Node : __webpack_require__(0).shape(babelPluginFlowReactPropTypes_proptype_Node),
-  classes: __webpack_require__(0).object,
-  in: __webpack_require__(0).bool,
-  onEnter: typeof babelPluginFlowReactPropTypes_proptype_TransitionCallback === 'function' ? babelPluginFlowReactPropTypes_proptype_TransitionCallback : __webpack_require__(0).shape(babelPluginFlowReactPropTypes_proptype_TransitionCallback),
-  onEntering: typeof babelPluginFlowReactPropTypes_proptype_TransitionCallback === 'function' ? babelPluginFlowReactPropTypes_proptype_TransitionCallback : __webpack_require__(0).shape(babelPluginFlowReactPropTypes_proptype_TransitionCallback),
-  onEntered: typeof babelPluginFlowReactPropTypes_proptype_TransitionCallback === 'function' ? babelPluginFlowReactPropTypes_proptype_TransitionCallback : __webpack_require__(0).shape(babelPluginFlowReactPropTypes_proptype_TransitionCallback),
-  onExit: typeof babelPluginFlowReactPropTypes_proptype_TransitionCallback === 'function' ? babelPluginFlowReactPropTypes_proptype_TransitionCallback : __webpack_require__(0).shape(babelPluginFlowReactPropTypes_proptype_TransitionCallback),
-  onExiting: typeof babelPluginFlowReactPropTypes_proptype_TransitionCallback === 'function' ? babelPluginFlowReactPropTypes_proptype_TransitionCallback : __webpack_require__(0).shape(babelPluginFlowReactPropTypes_proptype_TransitionCallback),
-  onExited: typeof babelPluginFlowReactPropTypes_proptype_TransitionCallback === 'function' ? babelPluginFlowReactPropTypes_proptype_TransitionCallback : __webpack_require__(0).shape(babelPluginFlowReactPropTypes_proptype_TransitionCallback),
-  theme: __webpack_require__(0).object,
-  transitionDuration: __webpack_require__(0).oneOfType([__webpack_require__(0).number, __webpack_require__(0).string])
-};
-
-var Collapse = function (_React$Component) {
-  (0, _inherits3.default)(Collapse, _React$Component);
-
-  function Collapse() {
-    var _ref;
-
-    var _temp, _this, _ret;
-
-    (0, _classCallCheck3.default)(this, Collapse);
-
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = Collapse.__proto__ || (0, _getPrototypeOf2.default)(Collapse)).call.apply(_ref, [this].concat(args))), _this), _this.wrapper = null, _this.handleEnter = function (element) {
-      element.style.height = '0px';
-      if (_this.props.onEnter) {
-        _this.props.onEnter(element);
-      }
-    }, _this.handleEntering = function (element) {
-      var _this$props = _this.props,
-          transitionDuration = _this$props.transitionDuration,
-          theme = _this$props.theme;
-
-      var wrapperHeight = _this.wrapper ? _this.wrapper.clientHeight : 0;
-
-      if (transitionDuration === 'auto') {
-        var getAutoHeightDuration = theme.transitions.getAutoHeightDuration;
-
-        element.style.transitionDuration = getAutoHeightDuration(wrapperHeight) + 'ms';
-      } else if (typeof transitionDuration === 'number') {
-        element.style.transitionDuration = transitionDuration + 'ms';
-      } else {
-        element.style.transitionDuration = transitionDuration;
-      }
-
-      element.style.height = wrapperHeight + 'px';
-
-      if (_this.props.onEntering) {
-        _this.props.onEntering(element);
-      }
-    }, _this.handleEntered = function (element) {
-      element.style.transitionDuration = '0ms'; // safari fix
-      element.style.height = 'auto';
-      reflow(element);
-      if (_this.props.onEntered) {
-        _this.props.onEntered(element);
-      }
-    }, _this.handleExit = function (element) {
-      var wrapperHeight = _this.wrapper ? _this.wrapper.clientHeight : 0;
-      element.style.height = wrapperHeight + 'px';
-      if (_this.props.onExit) {
-        _this.props.onExit(element);
-      }
-    }, _this.handleExiting = function (element) {
-      var _this$props2 = _this.props,
-          transitionDuration = _this$props2.transitionDuration,
-          theme = _this$props2.theme;
-
-      var wrapperHeight = _this.wrapper ? _this.wrapper.clientHeight : 0;
-
-      if (transitionDuration) {
-        if (transitionDuration === 'auto') {
-          var getAutoHeightDuration = theme.transitions.getAutoHeightDuration;
-
-          element.style.transitionDuration = getAutoHeightDuration(wrapperHeight) + 'ms';
-        } else if (typeof transitionDuration === 'number') {
-          element.style.transitionDuration = transitionDuration + 'ms';
-        } else {
-          element.style.transitionDuration = transitionDuration;
-        }
-      }
-
-      element.style.height = '0px';
-      if (_this.props.onExiting) {
-        _this.props.onExiting(element);
-      }
-    }, _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
-  }
-
-  (0, _createClass3.default)(Collapse, [{
-    key: 'render',
-    value: function render() {
-      var _this2 = this;
-
-      var _props = this.props,
-          children = _props.children,
-          classes = _props.classes,
-          onEnter = _props.onEnter,
-          onEntering = _props.onEntering,
-          onExit = _props.onExit,
-          onExiting = _props.onExiting,
-          transitionDuration = _props.transitionDuration,
-          theme = _props.theme,
-          other = (0, _objectWithoutProperties3.default)(_props, ['children', 'classes', 'onEnter', 'onEntering', 'onExit', 'onExiting', 'transitionDuration', 'theme']);
-
-
-      return _react2.default.createElement(
-        _Transition2.default,
-        (0, _extends3.default)({
-          onEntering: this.handleEntering,
-          onEnter: this.handleEnter,
-          onEntered: this.handleEntered,
-          enteredClassName: classes.entered,
-          onExiting: this.handleExiting,
-          onExit: this.handleExit
-        }, other),
-        _react2.default.createElement(
-          'div',
-          { className: classes.container },
-          _react2.default.createElement(
-            'div',
-            {
-              ref: function ref(node) {
-                _this2.wrapper = node;
-              }
-            },
-            children
-          )
-        )
-      );
-    }
-  }]);
-  return Collapse;
-}(_react2.default.Component);
-
-Collapse.defaultProps = {
-  in: false,
-  theme: {},
-  transitionDuration: 300
-};
-exports.default = (0, _withStyles2.default)(styles, {
-  withTheme: true,
-  name: 'MuiCollapse'
-})(Collapse);
-
-/***/ }),
+/* 354 */,
 /* 355 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -42243,49 +41767,7 @@ exports.default = (0, _withStyles2.default)(styles, { name: 'MuiIcon' })(Icon);
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 360 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(global) {
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _pure = __webpack_require__(23);
-
-var _pure2 = _interopRequireDefault(_pure);
-
-var _SvgIcon = __webpack_require__(14);
-
-var _SvgIcon2 = _interopRequireDefault(_SvgIcon);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var SvgIconCustom = global.__MUI_SvgIcon__ || _SvgIcon2.default;
-
-var _ref = _react2.default.createElement('path', { d: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' });
-
-var Favorite = function Favorite(props) {
-  return _react2.default.createElement(
-    SvgIconCustom,
-    props,
-    _ref
-  );
-};
-
-Favorite = (0, _pure2.default)(Favorite);
-Favorite.muiName = 'SvgIcon';
-
-exports.default = Favorite;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15)))
-
-/***/ }),
+/* 360 */,
 /* 361 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -42632,92 +42114,8 @@ exports.default = (0, _withStyles2.default)(styles, { name: 'MuiSvgIcon' })(SvgI
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 370 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(global) {
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _pure = __webpack_require__(23);
-
-var _pure2 = _interopRequireDefault(_pure);
-
-var _SvgIcon = __webpack_require__(14);
-
-var _SvgIcon2 = _interopRequireDefault(_SvgIcon);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var SvgIconCustom = global.__MUI_SvgIcon__ || _SvgIcon2.default;
-
-var _ref = _react2.default.createElement('path', { d: 'M19 4H5c-1.11 0-2 .9-2 2v12c0 1.1.89 2 2 2h4v-2H5V8h14v10h-4v2h4c1.1 0 2-.9 2-2V6c0-1.1-.89-2-2-2zm-7 6l-4 4h3v6h2v-6h3l-4-4z' });
-
-var OpenInBrowser = function OpenInBrowser(props) {
-  return _react2.default.createElement(
-    SvgIconCustom,
-    props,
-    _ref
-  );
-};
-
-OpenInBrowser = (0, _pure2.default)(OpenInBrowser);
-OpenInBrowser.muiName = 'SvgIcon';
-
-exports.default = OpenInBrowser;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15)))
-
-/***/ }),
-/* 371 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(global) {
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _pure = __webpack_require__(23);
-
-var _pure2 = _interopRequireDefault(_pure);
-
-var _SvgIcon = __webpack_require__(14);
-
-var _SvgIcon2 = _interopRequireDefault(_SvgIcon);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var SvgIconCustom = global.__MUI_SvgIcon__ || _SvgIcon2.default;
-
-var _ref = _react2.default.createElement('path', { d: 'M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z' });
-
-var ExpandMore = function ExpandMore(props) {
-  return _react2.default.createElement(
-    SvgIconCustom,
-    props,
-    _ref
-  );
-};
-
-ExpandMore = (0, _pure2.default)(ExpandMore);
-ExpandMore.muiName = 'SvgIcon';
-
-exports.default = ExpandMore;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15)))
-
-/***/ }),
+/* 370 */,
+/* 371 */,
 /* 372 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -53350,10 +52748,6 @@ var _Grid = __webpack_require__(73);
 
 var _Grid2 = _interopRequireDefault(_Grid);
 
-var _resourceCard = __webpack_require__(167);
-
-var _resourceCard2 = _interopRequireDefault(_resourceCard);
-
 var _singleCard = __webpack_require__(462);
 
 var _singleCard2 = _interopRequireDefault(_singleCard);
@@ -53434,7 +52828,8 @@ var CardsGrid = function (_React$Component) {
             thumbnail_url: resource.thumbnail_url,
             date: resource.date,
             abstract: resource.abstract,
-            detail_url: resource.detail_url })
+            detail_url: resource.detail_url,
+            launch_app_url: resource.launch_app_url })
         );
       });
     }
@@ -54176,8 +53571,8 @@ function MediaControlCard(props) {
       date = props.date,
       thumbnail_url = props.thumbnail_url,
       abstract = props.abstract,
-      detail_url = props.detail_url;
-
+      detail_url = props.detail_url,
+      launch_app_url = props.launch_app_url;
 
   return _react2.default.createElement(
     'div',
@@ -54222,10 +53617,10 @@ function MediaControlCard(props) {
         _react2.default.createElement(
           _Card.CardContent,
           { className: classes.contentActions },
-          _react2.default.createElement(
+          launch_app_url && _react2.default.createElement(
             _IconButton2.default,
             { className: classes.iconButton, 'aria-label': 'Delete', onClick: function onClick() {
-                return window.location.href = detail_url;
+                return window.location.href = launch_app_url;
               } },
             _react2.default.createElement(_Launch2.default, null),
             ' ',

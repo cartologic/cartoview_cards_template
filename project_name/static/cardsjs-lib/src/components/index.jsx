@@ -6,7 +6,6 @@ import classNames from 'classnames';
 import Button from 'material-ui/Button';
 import Grid from 'material-ui/Grid';
 
-import {default as ResourceCard} from './cards/resourceCard.jsx'
 import {default as MainAppBar} from './appbar/appBar.jsx'
 import {default as LeftDrawer} from './drawers/leftDrawers.jsx'
 import {default as CardsGrid} from './cards/cardsGrid.jsx'

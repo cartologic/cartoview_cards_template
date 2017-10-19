@@ -62,8 +62,7 @@ const styles = theme => ({
 
 function MediaControlCard(props) {
   const { classes, theme } = props;
-  const {id, owner, title, date, thumbnail_url, abstract, detail_url} = props;
-
+  const {id, owner, title, date, thumbnail_url, abstract, detail_url, launch_app_url} = props;
   return (
     <div>
       <Card className={classes.card}>
@@ -83,13 +82,16 @@ function MediaControlCard(props) {
           </CardContent>
           
           <CardContent className={classes.contentActions}>
-            <IconButton className={classes.iconButton} aria-label="Delete" onClick={()=>window.location.href=detail_url}>
-              <LaunchIcon /> <Typography type="body2" color="secondary" className={classes.actionsTyping}>Open</Typography>
-            </IconButton>
+            {
+              launch_app_url &&   
+              <IconButton className={classes.iconButton} aria-label="Delete" onClick={()=>window.location.href=launch_app_url}>
+                <LaunchIcon /> <Typography type="body2" color="secondary" className={classes.actionsTyping}>Open</Typography>
+              </IconButton>
+            }  
+
             <IconButton className={classes.iconButton} aria-label="Delete" onClick={()=>window.location.href=detail_url}>
               <DetailsIcon /> <Typography type="body2" color="secondary" className={classes.actionsTyping}>Details</Typography>
             </IconButton>
-            {/* <SimpleSnackbar detail_url={detail_url}/> */}
             <SimpleSnackbar detail_url={detail_url} className={classes.iconButton}/>
           </CardContent>
           

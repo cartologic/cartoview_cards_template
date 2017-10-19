@@ -5,7 +5,6 @@ import classNames from 'classnames';
 
 import Grid from 'material-ui/Grid';
 
-import {default as ResourceCard} from './resourceCard.jsx'
 import {default as SingleCard} from './singleCard.jsx'
 
 const styles = theme => ({
@@ -72,15 +71,8 @@ class CardsGrid extends React.Component {
               thumbnail_url={resource.thumbnail_url}
               date={resource.date}
               abstract={resource.abstract}
-              detail_url={resource.detail_url}/>  
-            {/* <ResourceCard
-              id={resource.id}
-              owner={resource.owner__username || resource.owner}
-              title={resource.title}
-              thumbnail_url={resource.thumbnail_url}
-              date={resource.date}
-              abstract={resource.abstract}
-              detail_url={resource.detail_url}/> */}
+              detail_url={resource.detail_url}
+              launch_app_url={resource.launch_app_url} />
           </Grid>
         )
       })
