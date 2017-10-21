@@ -8,7 +8,8 @@ import SkipPreviousIcon from 'material-ui-icons/SkipPrevious';
 import PlayArrowIcon from 'material-ui-icons/PlayArrow';
 import SkipNextIcon from 'material-ui-icons/SkipNext';
 import {default as LaunchIcon} from 'material-ui-icons/Launch';
-import {default as DetailsIcon} from 'material-ui-icons/Details';
+// import {default as DetailsIcon} from 'material-ui-icons/Details';
+import {default as DetailsIcon} from 'material-ui-icons/FormatListbulleted';
 import { default as CopyIcon } from 'material-ui-icons/ContentCopy';
 import SimpleSnackbar from './copySnakeBar.jsx'
 
@@ -32,7 +33,9 @@ const styles = theme => ({
   },
   contentActions: {
     flex: '1 0 auto',
-    padding: '0 0 0 10 !important'
+    padding: '0 0 0 10 !important',
+    display: 'flex',
+    justifyContent: 'start'
   },
   actionsTyping: {
     fontSize:'13px !important'

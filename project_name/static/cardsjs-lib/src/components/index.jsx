@@ -5,6 +5,8 @@ import classNames from 'classnames';
 
 import Button from 'material-ui/Button';
 import Grid from 'material-ui/Grid';
+import IconButton from 'material-ui/IconButton';
+import {default as UpIcon} from 'material-ui-icons/ArrowUpward'
 
 import {default as MainAppBar} from './appbar/appBar.jsx'
 import {default as LeftDrawer} from './drawers/leftDrawers.jsx'
@@ -67,7 +69,16 @@ const styles = theme => {
           easing: theme.transitions.easing.easeOut,
           duration: theme.transitions.duration.enteringScreen
         })
-    }
+    },
+    loadMore: {
+      margin: '30 0 30 0', 
+      display: 'flex',
+      justifyContent: 'center'
+    },
+    loadMoreButton: {
+      display: 'inline-flex',
+      marginRight: 20
+    },
   });
 }
 
@@ -75,7 +86,7 @@ class CardsView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      leftDrawerOpen: false
+      leftDrawerOpen: false,
     };
   }
 
@@ -91,7 +102,7 @@ class CardsView extends React.Component {
 
   getResources() {
     fetch(this.props.resources_url, {credentials: 'include'}).then((response) => response.json()).then((data) => {
-      this.setState({resources: data.objects})
+      this.setState({resources: data.objects, nextURL: data.meta.next})
     })
 
     let categories = []
@@ -133,7 +144,7 @@ class CardsView extends React.Component {
     if (value == '') 
       this.applyFilters()
     else {
-      let url = `${this.props.resources_url}?&title__icontains=${value}`
+      let url = `${this.props.resources_url}&title__icontains=${value}`
       fetch(url, {credentials: 'include'}).then((response) => response.json()).then((data) => {
         this.setState({resources: data.objects})
       })
@@ -150,11 +161,24 @@ class CardsView extends React.Component {
 
   applyFilters() {
     let url = this.state.paramsString
-      ? `${this.props.resources_url}?${this.state.paramsString}`
+      ? `${this.props.resources_url}${this.state.paramsString}`
       : `${this.props.resources_url}`
     fetch(url, {credentials: 'include'}).then((response) => response.json()).then((data) => {
-      this.setState({resources: data.objects})
+      this.setState({resources: data.objects, nextURL:data.meta.next})
     })
+  }
+
+  getNextResources() {
+    let nextURL = this.state.nextURL;
+    if (nextURL) {
+      fetch(nextURL, { credentials: 'include' }).then((response) => response.json()).then((data) => {
+        let currentResources = this.state.resources;
+        currentResources.push(...data.objects)
+        this.setState({resources: currentResources, nextURL:data.meta.next})
+      })
+    } else {
+      this.setState({endOfResources: true})
+    }
   }
 
   componentWillMount() {
@@ -172,7 +196,7 @@ class CardsView extends React.Component {
   render() {
     const {classes} = this.props;
     return (
-      <div className={classes.root}>
+      <div className={classes.root} >
         <div className={classes.appFrame}>
           <MainAppBar
             appBarShift={this.state.leftDrawerOpen}
@@ -207,8 +231,25 @@ class CardsView extends React.Component {
             <CardsGrid
               resources={this.state.resources
               ? this.state.resources
-              : []}/>
+                : []} />
+            { 
+              this.state.nextURL
+              ? <div className={classes.loadMore}>
+                  <Button raised onClick={() => { this.getNextResources() }} className={classes.loadMoreButton}>Load More</Button>                  
+                  <IconButton className={classes.loadMoreButton} onClick={() => { window.scrollTo(0, 0) }} aria-label="Go Up">
+                    <UpIcon />
+                  </IconButton>
+                </div>
+                : this.state.resources &&
+                this.state.resources.length != 0 &&
+                <div className={classes.loadMore}>
+                  <IconButton className={classes.loadMoreButton} onClick={() => { window.scrollTo(0, 0) }} aria-label="Go Up">
+                    <UpIcon />
+                  </IconButton>
+                </div>
+            }
           </main>
+          
         </div>
       </div>
     );

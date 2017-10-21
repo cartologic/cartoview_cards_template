@@ -37003,6 +37003,14 @@ var _Grid = __webpack_require__(73);
 
 var _Grid2 = _interopRequireDefault(_Grid);
 
+var _IconButton = __webpack_require__(41);
+
+var _IconButton2 = _interopRequireDefault(_IconButton);
+
+var _ArrowUpward = __webpack_require__(472);
+
+var _ArrowUpward2 = _interopRequireDefault(_ArrowUpward);
+
 var _appBar = __webpack_require__(378);
 
 var _appBar2 = _interopRequireDefault(_appBar);
@@ -37018,6 +37026,8 @@ var _cardsGrid2 = _interopRequireDefault(_cardsGrid);
 __webpack_require__(457);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -37064,6 +37074,15 @@ var styles = function styles(theme) {
         easing: theme.transitions.easing.easeOut,
         duration: theme.transitions.duration.enteringScreen
       })
+    },
+    loadMore: {
+      margin: '30 0 30 0',
+      display: 'flex',
+      justifyContent: 'center'
+    },
+    loadMoreButton: {
+      display: 'inline-flex',
+      marginRight: 20
     }
   };
 };
@@ -37098,7 +37117,7 @@ var CardsView = function (_React$Component) {
       fetch(this.props.resources_url, { credentials: 'include' }).then(function (response) {
         return response.json();
       }).then(function (data) {
-        _this2.setState({ resources: data.objects });
+        _this2.setState({ resources: data.objects, nextURL: data.meta.next });
       });
 
       var categories = [];
@@ -37140,7 +37159,7 @@ var CardsView = function (_React$Component) {
       var _this3 = this;
 
       if (value == '') this.applyFilters();else {
-        var url = this.props.resources_url + '?&title__icontains=' + value;
+        var url = this.props.resources_url + '&title__icontains=' + value;
         fetch(url, { credentials: 'include' }).then(function (response) {
           return response.json();
         }).then(function (data) {
@@ -37164,12 +37183,30 @@ var CardsView = function (_React$Component) {
     value: function applyFilters() {
       var _this5 = this;
 
-      var url = this.state.paramsString ? this.props.resources_url + '?' + this.state.paramsString : '' + this.props.resources_url;
+      var url = this.state.paramsString ? '' + this.props.resources_url + this.state.paramsString : '' + this.props.resources_url;
       fetch(url, { credentials: 'include' }).then(function (response) {
         return response.json();
       }).then(function (data) {
-        _this5.setState({ resources: data.objects });
+        _this5.setState({ resources: data.objects, nextURL: data.meta.next });
       });
+    }
+  }, {
+    key: 'getNextResources',
+    value: function getNextResources() {
+      var _this6 = this;
+
+      var nextURL = this.state.nextURL;
+      if (nextURL) {
+        fetch(nextURL, { credentials: 'include' }).then(function (response) {
+          return response.json();
+        }).then(function (data) {
+          var currentResources = _this6.state.resources;
+          currentResources.push.apply(currentResources, _toConsumableArray(data.objects));
+          _this6.setState({ resources: currentResources, nextURL: data.meta.next });
+        });
+      } else {
+        this.setState({ endOfResources: true });
+      }
     }
   }, {
     key: 'componentWillMount',
@@ -37189,7 +37226,7 @@ var CardsView = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this6 = this;
+      var _this7 = this;
 
       var classes = this.props.classes;
 
@@ -37202,7 +37239,7 @@ var CardsView = function (_React$Component) {
           _react2.default.createElement(_appBar2.default, {
             appBarShift: this.state.leftDrawerOpen,
             handleDrawerOpen: function handleDrawerOpen() {
-              _this6.handleDrawerOpen();
+              _this7.handleDrawerOpen();
             },
             title: this.props.title,
             filtersReady: this.state.categories && this.state.keywords && this.state.owners ? true : false,
@@ -37211,14 +37248,14 @@ var CardsView = function (_React$Component) {
             categories: this.state.categories && this.state.categories,
             owners: this.state.owners && this.state.owners,
             applyFilters: function applyFilters(paramsString) {
-              _this6.setParamsString(paramsString);
+              _this7.setParamsString(paramsString);
             },
             searchResources: function searchResources(value) {
-              _this6.searchResources(value);
+              _this7.searchResources(value);
             } }),
           _react2.default.createElement(_leftDrawers2.default, {
             handleDrawerClose: function handleDrawerClose() {
-              _this6.handleDrawerClose();
+              _this7.handleDrawerClose();
             },
             drawerOpen: this.state.leftDrawerOpen }),
           _react2.default.createElement(
@@ -37226,7 +37263,35 @@ var CardsView = function (_React$Component) {
             {
               className: (0, _classnames2.default)(classes.content, this.state.leftDrawerOpen && classes.contentShift) },
             _react2.default.createElement(_cardsGrid2.default, {
-              resources: this.state.resources ? this.state.resources : [] })
+              resources: this.state.resources ? this.state.resources : [] }),
+            this.state.nextURL ? _react2.default.createElement(
+              'div',
+              { className: classes.loadMore },
+              _react2.default.createElement(
+                _Button2.default,
+                { raised: true, onClick: function onClick() {
+                    _this7.getNextResources();
+                  }, className: classes.loadMoreButton },
+                'Load More'
+              ),
+              _react2.default.createElement(
+                _IconButton2.default,
+                { className: classes.loadMoreButton, onClick: function onClick() {
+                    window.scrollTo(0, 0);
+                  }, 'aria-label': 'Go Up' },
+                _react2.default.createElement(_ArrowUpward2.default, null)
+              )
+            ) : this.state.resources && this.state.resources.length != 0 && _react2.default.createElement(
+              'div',
+              { className: classes.loadMore },
+              _react2.default.createElement(
+                _IconButton2.default,
+                { className: classes.loadMoreButton, onClick: function onClick() {
+                    window.scrollTo(0, 0);
+                  }, 'aria-label': 'Go Up' },
+                _react2.default.createElement(_ArrowUpward2.default, null)
+              )
+            )
           )
         )
       );
@@ -53499,9 +53564,9 @@ var _Launch = __webpack_require__(466);
 
 var _Launch2 = _interopRequireDefault(_Launch);
 
-var _Details = __webpack_require__(467);
+var _FormatListbulleted = __webpack_require__(470);
 
-var _Details2 = _interopRequireDefault(_Details);
+var _FormatListbulleted2 = _interopRequireDefault(_FormatListbulleted);
 
 var _ContentCopy = __webpack_require__(468);
 
@@ -53533,7 +53598,9 @@ var styles = function styles(theme) {
     },
     contentActions: {
       flex: '1 0 auto',
-      padding: '0 0 0 10 !important'
+      padding: '0 0 0 10 !important',
+      display: 'flex',
+      justifyContent: 'start'
     },
     actionsTyping: {
       fontSize: '13px !important'
@@ -53561,6 +53628,8 @@ var styles = function styles(theme) {
     }
   };
 };
+// import {default as DetailsIcon} from 'material-ui-icons/Details';
+
 
 function MediaControlCard(props) {
   var classes = props.classes,
@@ -53635,7 +53704,7 @@ function MediaControlCard(props) {
             { className: classes.iconButton, 'aria-label': 'Delete', onClick: function onClick() {
                 return window.location.href = detail_url;
               } },
-            _react2.default.createElement(_Details2.default, null),
+            _react2.default.createElement(_FormatListbulleted2.default, null),
             ' ',
             _react2.default.createElement(
               _Typography2.default,
@@ -53830,49 +53899,7 @@ exports.default = Launch;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15)))
 
 /***/ }),
-/* 467 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(global) {
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _pure = __webpack_require__(23);
-
-var _pure2 = _interopRequireDefault(_pure);
-
-var _SvgIcon = __webpack_require__(14);
-
-var _SvgIcon2 = _interopRequireDefault(_SvgIcon);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var SvgIconCustom = global.__MUI_SvgIcon__ || _SvgIcon2.default;
-
-var _ref = _react2.default.createElement('path', { d: 'M3 4l9 16 9-16H3zm3.38 2h11.25L12 16 6.38 6z' });
-
-var Details = function Details(props) {
-  return _react2.default.createElement(
-    SvgIconCustom,
-    props,
-    _ref
-  );
-};
-
-Details = (0, _pure2.default)(Details);
-Details.muiName = 'SvgIcon';
-
-exports.default = Details;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15)))
-
-/***/ }),
+/* 467 */,
 /* 468 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -53913,6 +53940,94 @@ ContentCopy = (0, _pure2.default)(ContentCopy);
 ContentCopy.muiName = 'SvgIcon';
 
 exports.default = ContentCopy;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15)))
+
+/***/ }),
+/* 469 */,
+/* 470 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(global) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _pure = __webpack_require__(23);
+
+var _pure2 = _interopRequireDefault(_pure);
+
+var _SvgIcon = __webpack_require__(14);
+
+var _SvgIcon2 = _interopRequireDefault(_SvgIcon);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var SvgIconCustom = global.__MUI_SvgIcon__ || _SvgIcon2.default;
+
+var _ref = _react2.default.createElement('path', { d: 'M4 10.5c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5 1.5-.67 1.5-1.5-.67-1.5-1.5-1.5zm0-6c-.83 0-1.5.67-1.5 1.5S3.17 7.5 4 7.5 5.5 6.83 5.5 6 4.83 4.5 4 4.5zm0 12c-.83 0-1.5.68-1.5 1.5s.68 1.5 1.5 1.5 1.5-.68 1.5-1.5-.67-1.5-1.5-1.5zM7 19h14v-2H7v2zm0-6h14v-2H7v2zm0-8v2h14V5H7z' });
+
+var FormatListBulleted = function FormatListBulleted(props) {
+  return _react2.default.createElement(
+    SvgIconCustom,
+    props,
+    _ref
+  );
+};
+
+FormatListBulleted = (0, _pure2.default)(FormatListBulleted);
+FormatListBulleted.muiName = 'SvgIcon';
+
+exports.default = FormatListBulleted;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15)))
+
+/***/ }),
+/* 471 */,
+/* 472 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(global) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _pure = __webpack_require__(23);
+
+var _pure2 = _interopRequireDefault(_pure);
+
+var _SvgIcon = __webpack_require__(14);
+
+var _SvgIcon2 = _interopRequireDefault(_SvgIcon);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var SvgIconCustom = global.__MUI_SvgIcon__ || _SvgIcon2.default;
+
+var _ref = _react2.default.createElement('path', { d: 'M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z' });
+
+var ArrowUpward = function ArrowUpward(props) {
+  return _react2.default.createElement(
+    SvgIconCustom,
+    props,
+    _ref
+  );
+};
+
+ArrowUpward = (0, _pure2.default)(ArrowUpward);
+ArrowUpward.muiName = 'SvgIcon';
+
+exports.default = ArrowUpward;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15)))
 
 /***/ })
