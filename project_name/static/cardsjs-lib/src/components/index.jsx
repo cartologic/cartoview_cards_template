@@ -87,6 +87,7 @@ class CardsView extends React.Component {
     super(props);
     this.state = {
       leftDrawerOpen: false,
+      paramsObject:{}
     };
   }
 
@@ -140,29 +141,38 @@ class CardsView extends React.Component {
 
   }
 
-  searchResources(value) {
-    if (value == '') 
-      this.applyFilters()
-    else {
-      let url = `${this.props.resources_url}&title__icontains=${value}`
-      fetch(url, {credentials: 'include'}).then((response) => response.json()).then((data) => {
-        this.setState({resources: data.objects})
-      })
-    }
+  searchResources(searchValue) {
+    this.applyFilters(searchValue)
   }
 
-  setParamsString(paramsString) {
-    this.setState({
-      paramsString
-    }, () => {
+  setParamsString(paramsObject) {
+    this.setState({ paramsObject }, () => {
+      this.applyFilters()
+    })
+    let paramsString = ''
+    for (let param in paramsObject) {
+      paramsString += `&${param}=${paramsObject[param].toString()}`
+    }
+    this.setState({ paramsString: paramsString }, () => {
       this.applyFilters()
     })
   }
 
-  applyFilters() {
-    let url = this.state.paramsString
-      ? `${this.props.resources_url}${this.state.paramsString}`
-      : `${this.props.resources_url}`
+  applyFilters(searchValue) {
+    let paramsObject = this.state.paramsObject
+    if (searchValue && searchValue.trim() != '') {
+      paramsObject.title__icontains = searchValue
+    }
+    else {
+      delete paramsObject.title__icontains
+    }
+    let paramsString = ''
+    
+    for (let param in paramsObject) {
+      paramsString += `&${param}=${paramsObject[param].toString()}`
+    }
+    
+    let url = `${this.props.resources_url}${paramsString}`
     fetch(url, {credentials: 'include'}).then((response) => response.json()).then((data) => {
       this.setState({resources: data.objects, nextURL:data.meta.next})
     })
@@ -213,8 +223,8 @@ class CardsView extends React.Component {
             keywords={this.state.keywords && this.state.keywords}
             categories={this.state.categories && this.state.categories}
             owners={this.state.owners && this.state.owners}
-            applyFilters={(paramsString) => {
-            this.setParamsString(paramsString)
+            applyFilters={(paramsObject) => {
+            this.setParamsString(paramsObject)
           }}
             searchResources={(value) => {
             this.searchResources(value)

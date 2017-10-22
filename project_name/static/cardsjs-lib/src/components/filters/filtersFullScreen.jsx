@@ -82,41 +82,32 @@ class FullScreenDialog extends React.Component {
   };
 
   handleSave() {
-    let paramsString = ''
+    let params = {}
 
     if (this.state.checkedKeywords && this.state.checkedKeywords.length > 0) {
-      paramsString += '&keywords__slug__in=' + this
-        .state
-        .checkedKeywords
-        .toString()
+      params.keywords__slug__in = this.state.checkedKeywords
     }
     if (this.state.checkedCategories && this.state.checkedCategories.length > 0) {
-      paramsString += '&category__identifier__in=' + this
-        .state
-        .checkedCategories
-        .toString()
+      params.category__identifier__in = this.state.checkedCategories
     }
     if (this.state.checkedOwners && this.state.checkedOwners.length > 0) {
-      paramsString += '&owner__username__in=' + this
-        .state
-        .checkedOwners
-        .toString()
+      params.owner__username__in = this.state.checkedOwners
     }
     if (this.state.toDate && this.state.fromDate) {
-      paramsString += '&date__range=' + this.state.fromDate + ',' + this.state.toDate
+      params.date__range = `${this.state.fromDate},${this.state.toDate}`
     } else {
       if (this.state.fromDate) {
-        paramsString += '&date__gte=' + this.state.fromDate
+        params.date__gte = `${this.state.fromDate}`
       }
       if (this.state.toDate) {
-        paramsString += '&date__lte=' + this.state.toDate
+        params.date__gte = `${this.state.toDate}`
       }
     }
 
     this.handleRequestClose()
     this
       .props
-      .applyFilters(paramsString)
+      .applyFilters(params)
   }
 
   manageChecked(list, type) {
