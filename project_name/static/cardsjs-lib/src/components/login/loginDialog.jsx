@@ -95,7 +95,8 @@ class LoginDialog extends React.Component {
               type="text"
               onChange={(e) => {
               this.setState({username: e.target.value})
-              }}  
+              }}
+              onKeyPress={(e)=>{if(e.key == 'Enter'){this.handleRequestClose()}}}
               value={this.state.username}
               fullWidth/>
             <TextField
@@ -106,7 +107,8 @@ class LoginDialog extends React.Component {
               type="password"
               onChange={(e) => {
               this.setState({password: e.target.value})
-            }}
+              }}
+              onKeyPress={(e)=>{if(e.key == 'Enter'){this.handleRequestClose()}}}
               value={this.state.password}
               fullWidth/>
           </DialogContent>
