@@ -22,3 +22,7 @@
   max-width: 90%;
   width: max-content;
 }
+
+.cardsContainer{
+  margin: auto !important;
+}

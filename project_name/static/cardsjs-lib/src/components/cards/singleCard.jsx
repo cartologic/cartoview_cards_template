@@ -21,8 +21,9 @@ const styles = theme => ({
   details: {
     display: 'flex',
     flexDirection: 'column',
-    width: 200,
-    maxWidth:200,
+    // width: 200,
+    // maxWidth:200,
+    minWidth: '70%'
   },
   content: {
     flex: '1 0 auto',
@@ -45,11 +46,13 @@ const styles = theme => ({
     margin: '0 20 0 0',
   },
   cover: {
-    width: 140,
-    maxWidth: 140,
-    height: 140,
-    maxHeight: 140,
-    backgroundSize: 'contain'
+    // width: 140,
+    // maxWidth: 140,
+    minWidth: '30%',
+    height: 0,
+    // maxHeight: 140,
+    paddingTop: '120px',
+    backgroundSize: 'cover'
   },
   controls: {
     display: 'flex',

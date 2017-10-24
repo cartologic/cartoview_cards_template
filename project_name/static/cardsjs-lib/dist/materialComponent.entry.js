@@ -42151,6 +42151,16 @@ var styles = function styles(theme) {
   };
 };
 
+var initialState = {
+  open: false,
+
+  checkedKeywords: [],
+  checkedCategories: [],
+  checkedOwners: [],
+  fromDate: '',
+  toDate: ''
+};
+
 var FullScreenDialog = function (_React$Component) {
   _inherits(FullScreenDialog, _React$Component);
 
@@ -42159,15 +42169,7 @@ var FullScreenDialog = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (FullScreenDialog.__proto__ || Object.getPrototypeOf(FullScreenDialog)).call(this, props));
 
-    _this.state = {
-      open: false
-
-      // checkedKeywords 
-      // checkedCategories
-      // checkedOwners
-      // fromDate
-      // toDate
-    };
+    _this.state = initialState;
     return _this;
   }
 
@@ -42183,7 +42185,9 @@ var FullScreenDialog = function (_React$Component) {
     }
   }, {
     key: 'handleSave',
-    value: function handleSave() {
+    value: function handleSave(clear) {
+      var _this2 = this;
+
       var params = {};
 
       if (this.state.checkedKeywords && this.state.checkedKeywords.length > 0) {
@@ -42206,8 +42210,10 @@ var FullScreenDialog = function (_React$Component) {
         }
       }
 
+      clear ? this.setState(initialState, function () {
+        _this2.props.applyFilters({});
+      }) : this.props.applyFilters(params);
       this.handleRequestClose();
-      this.props.applyFilters(params);
     }
   }, {
     key: 'manageChecked',
@@ -42223,7 +42229,7 @@ var FullScreenDialog = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       var classes = this.props.classes;
 
@@ -42234,7 +42240,7 @@ var FullScreenDialog = function (_React$Component) {
           _IconButton2.default,
           {
             onClick: function onClick() {
-              _this2.handleClickOpen();
+              _this3.handleClickOpen();
             },
             color: 'contrast',
             'aria-label': 'Filters',
@@ -42253,7 +42259,7 @@ var FullScreenDialog = function (_React$Component) {
             className: classes.Dialog,
             open: this.state.open,
             onRequestClose: function onRequestClose() {
-              _this2.handleRequestClose();
+              _this3.handleRequestClose();
             },
             transition: _react2.default.createElement(_Slide2.default, { direction: 'down' }) },
           _react2.default.createElement(
@@ -42267,7 +42273,7 @@ var FullScreenDialog = function (_React$Component) {
                 {
                   color: 'contrast',
                   onClick: function onClick() {
-                    _this2.handleRequestClose();
+                    _this3.handleRequestClose();
                   },
                   'aria-label': 'Close' },
                 _react2.default.createElement(_Close2.default, null)
@@ -42280,9 +42286,18 @@ var FullScreenDialog = function (_React$Component) {
               _react2.default.createElement(
                 _Button2.default,
                 {
+                  color: 'accent',
+                  onClick: function onClick() {
+                    _this3.handleSave(true);
+                  } },
+                'Clear All'
+              ),
+              _react2.default.createElement(
+                _Button2.default,
+                {
                   color: 'contrast',
                   onClick: function onClick() {
-                    _this2.handleSave();
+                    _this3.handleSave();
                   } },
                 'Apply'
               )
@@ -42316,21 +42331,21 @@ var FullScreenDialog = function (_React$Component) {
                   items: this.props.categories,
                   checkedItems: this.state.checkedCategories,
                   manageChecked: function manageChecked(list) {
-                    _this2.manageChecked(list, 'checkedCategories');
+                    _this3.manageChecked(list, 'checkedCategories');
                   } }),
                 _react2.default.createElement(_filterList2.default, {
                   title: 'By Keyword',
                   items: this.props.keywords,
                   checkedItems: this.state.checkedKeywords,
                   manageChecked: function manageChecked(list) {
-                    _this2.manageChecked(list, 'checkedKeywords');
+                    _this3.manageChecked(list, 'checkedKeywords');
                   } }),
                 _react2.default.createElement(_filterList2.default, {
                   title: 'By Owner(username)',
                   items: this.props.owners,
                   checkedItems: this.state.checkedOwners,
                   manageChecked: function manageChecked(list) {
-                    _this2.manageChecked(list, 'checkedOwners');
+                    _this3.manageChecked(list, 'checkedOwners');
                   } }),
                 _react2.default.createElement(
                   'div',
@@ -42346,13 +42361,13 @@ var FullScreenDialog = function (_React$Component) {
                     _react2.default.createElement(_datePicker2.default, {
                       label: 'From',
                       handleDateChange: function handleDateChange(date) {
-                        _this2.handleDateChange(date, 'fromDate');
+                        _this3.handleDateChange(date, 'fromDate');
                       },
                       value: this.state.fromDate && this.state.fromDate }),
                     _react2.default.createElement(_datePicker2.default, {
                       label: 'To',
                       handleDateChange: function handleDateChange(date) {
-                        _this2.handleDateChange(date, 'toDate');
+                        _this3.handleDateChange(date, 'toDate');
                       },
                       value: this.state.toDate && this.state.toDate })
                   )
@@ -47195,6 +47210,11 @@ var LoginDialog = function (_React$Component) {
               onChange: function onChange(e) {
                 _this3.setState({ username: e.target.value });
               },
+              onKeyPress: function onKeyPress(e) {
+                if (e.key == 'Enter') {
+                  _this3.handleRequestClose();
+                }
+              },
               value: this.state.username,
               fullWidth: true }),
             _react2.default.createElement(_TextField2.default, {
@@ -47205,6 +47225,11 @@ var LoginDialog = function (_React$Component) {
               type: 'password',
               onChange: function onChange(e) {
                 _this3.setState({ password: e.target.value });
+              },
+              onKeyPress: function onKeyPress(e) {
+                if (e.key == 'Enter') {
+                  _this3.handleRequestClose();
+                }
               },
               value: this.state.password,
               fullWidth: true })
@@ -51627,26 +51652,14 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 var styles = function styles(theme) {
-  var _gridCell;
-
   return {
-    rootGrid: _defineProperty({
-      margin: 'auto',
-      width: '95%',
-      justifyContent: 'center'
-    }, theme.breakpoints.down('lg'), {
-      justifyContent: 'center',
-      width: '95%'
-    }),
-    gridCell: (_gridCell = {}, _defineProperty(_gridCell, theme.breakpoints.up('md'), {
-      maxWidth: 'max-content'
-    }), _defineProperty(_gridCell, theme.breakpoints.down('md'), {
-      maxWidth: 'max-content',
-      margin: 'auto'
-    }), _gridCell)
+    rootGrid: {
+      width: '94%',
+      paddingRight: '3%',
+      paddingLeft: '3%'
+    },
+    gridCell: {}
   };
 };
 
@@ -51683,10 +51696,10 @@ var CardsGrid = function (_React$Component) {
             item: true,
             xs: 12,
             sm: 6,
-            md: 3,
+            md: 4,
             lg: 3,
             key: i,
-            className: classes.gridCell
+            className: classes.gridCell + ' resourceGridCell'
           },
           _react2.default.createElement(_singleCard2.default, {
             id: resource.id,
@@ -51696,7 +51709,8 @@ var CardsGrid = function (_React$Component) {
             date: resource.date,
             abstract: resource.abstract,
             detail_url: resource.detail_url,
-            launch_app_url: resource.launch_app_url })
+            launch_app_url: resource.launch_app_url
+          })
         );
       });
     }
@@ -51707,7 +51721,7 @@ var CardsGrid = function (_React$Component) {
 
       return _react2.default.createElement(
         _Grid2.default,
-        { container: true, direction: "row", className: classes.rootGrid, spacing: 8 },
+        { container: true, direction: "row", className: classes.rootGrid + ' cardsContainer', spacing: 8 },
         this.state.resources && this.renderCards(classes)
       );
     }
@@ -51794,8 +51808,9 @@ var styles = function styles(theme) {
     details: {
       display: 'flex',
       flexDirection: 'column',
-      width: 200,
-      maxWidth: 200
+      // width: 200,
+      // maxWidth:200,
+      minWidth: '70%'
     },
     content: {
       flex: '1 0 auto',
@@ -51818,11 +51833,13 @@ var styles = function styles(theme) {
       margin: '0 20 0 0'
     },
     cover: {
-      width: 140,
-      maxWidth: 140,
-      height: 140,
-      maxHeight: 140,
-      backgroundSize: 'contain'
+      // width: 140,
+      // maxWidth: 140,
+      minWidth: '30%',
+      height: 0,
+      // maxHeight: 140,
+      paddingTop: '120px',
+      backgroundSize: 'cover'
     },
     controls: {
       display: 'flex',
@@ -53473,7 +53490,7 @@ exports = module.exports = __webpack_require__(462)(undefined);
 
 
 // module
-exports.push([module.i, ".myClass{\n  width: 240px !important\n}\n\n.user_avatar:hover{\n  background-color: #fff !important;\n  color: black !important;\n  cursor: pointer\n}\n\n.filtersContainer{\n  display: -webkit-box;\n  display: -moz-box;\n  display: -ms-flexbox;\n  display: -webkit-flex;\n  display: flex;\n\n  flex-flow: row wrap;\n  justify-content: center;\n\n  margin: 15 auto;\n  max-width: 90%;\n  width: max-content;\n}\n", ""]);
+exports.push([module.i, ".myClass{\n  width: 240px !important\n}\n\n.user_avatar:hover{\n  background-color: #fff !important;\n  color: black !important;\n  cursor: pointer\n}\n\n.filtersContainer{\n  display: -webkit-box;\n  display: -moz-box;\n  display: -ms-flexbox;\n  display: -webkit-flex;\n  display: flex;\n\n  flex-flow: row wrap;\n  justify-content: center;\n\n  margin: 15 auto;\n  max-width: 90%;\n  width: max-content;\n}\n\n.cardsContainer{\n  margin: auto !important;\n}\n", ""]);
 
 // exports
 

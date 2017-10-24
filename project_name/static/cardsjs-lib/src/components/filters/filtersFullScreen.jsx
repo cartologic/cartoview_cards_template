@@ -59,18 +59,20 @@ const styles = theme => {
   })
 };
 
+const initialState = {
+  open: false,
+
+  checkedKeywords: [], 
+  checkedCategories : [],
+  checkedOwners : [],
+  fromDate:'',
+  toDate:''
+};
+
 class FullScreenDialog extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      open: false,
-
-      // checkedKeywords 
-      // checkedCategories
-      // checkedOwners
-      // fromDate
-      // toDate
-    };
+    this.state = initialState
   }
 
   handleClickOpen() {
@@ -81,7 +83,7 @@ class FullScreenDialog extends React.Component {
     this.setState({open: false});
   };
 
-  handleSave() {
+  handleSave(clear) {
     let params = {}
 
     if (this.state.checkedKeywords && this.state.checkedKeywords.length > 0) {
@@ -104,10 +106,10 @@ class FullScreenDialog extends React.Component {
       }
     }
 
-    this.handleRequestClose()
-    this
-      .props
-      .applyFilters(params)
+    clear
+      ? this.setState(initialState, ()=>{this.props.applyFilters({})})
+      : this.props.applyFilters(params)
+      this.handleRequestClose()      
   }
 
   manageChecked(list, type) {
@@ -159,10 +161,18 @@ class FullScreenDialog extends React.Component {
                 Filters
               </Typography>
               <Button
+                color="accent"
+                onClick={() => {
+                this.handleSave(true)
+                }}>
+                Clear All
+              </Button>
+
+              <Button
                 color="contrast"
                 onClick={() => {
                 this.handleSave()
-              }}>
+                }}>
                 Apply
               </Button>
             </Toolbar>
