@@ -4,7 +4,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { createMuiTheme } from 'material-ui/styles'
 import {red, cyan} from 'material-ui/colors';
 
-import ResourcesCardsView from './components/cardsView.jsx'
+import {default as ResourcesCardsView} from './components/index.jsx'
 
 export default class MaterialComponent extends React.Component {
   constructor(props) {

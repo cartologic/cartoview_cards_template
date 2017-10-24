@@ -12,8 +12,6 @@ import Avatar from 'material-ui/Avatar';
 
 import {default as LogoutDialog} from './logoutDialog.jsx'
 
-import '../css/style.css'
-
 const styles = theme => ({
   avatar: {
     marginRight: '20px'

@@ -125,26 +125,25 @@ class IntegrationAutosuggest extends React.Component {
   }
 
   componentWillMount() {
-    suggestions = this.props.getSuggestions()
+    // suggestions = this.props.getSuggestions()
   }
 
   handleSuggestionsFetchRequested({ value }) {
-    this.setState({
-      suggestions: getSuggestions(value),
-    },()=>{this.props.searchResources(value)});
+    // this.setState({
+    //   suggestions: getSuggestions(value),
+    // },()=>{this.props.searchResources(value)});
   };
 
   handleSuggestionsClearRequested() {
-    
-    this.setState({
-      suggestions: [],
-    },()=>{this.props.searchResources('')});
+    // this.setState({
+    //   suggestions: [],
+    // },()=>{this.props.searchResources('')});
   };
 
-  handleChange(event, { newValue }){
+  handleChange(event, { newValue }) {
     this.setState({
       value: newValue,
-    });
+    }, ()=>{this.props.searchResources(this.state.value)});
   };
 
   render() {

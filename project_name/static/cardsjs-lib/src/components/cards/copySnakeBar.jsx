@@ -1,5 +1,3 @@
-/* eslint-disable flowtype/require-valid-file-annotation */
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
@@ -9,11 +7,21 @@ import IconButton from 'material-ui/IconButton';
 import CloseIcon from 'material-ui-icons/Close';
 import ShareIcon from 'material-ui-icons/Share';
 import copy from 'copy-to-clipboard'
+import { default as CopyIcon } from 'material-ui-icons/ContentCopy';
+import Typography from 'material-ui/Typography';
+
 
 const styles = theme => ({
+  root: {display: 'inline-flex'},
   close: {
     width: theme.spacing.unit * 4,
     height: theme.spacing.unit * 4,
+  },
+  iconButton: {
+    display: 'inline-flex',
+  },
+  actionsTyping: {
+    fontSize:'13px !important'
   },
 });
 
@@ -41,9 +49,13 @@ class SimpleSnackbar extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <div>
-        <IconButton aria-label="Share" onClick={() => { copy(String(window.location.origin+this.props.detail_url));this.handleClick()}}>
-            <ShareIcon />
+      <div className={classes.root}>
+        <IconButton
+          onClick={() => { copy(String(window.location.origin+this.props.detail_url));this.handleClick()}}
+          className={classes.iconButton}
+          aria-label="Delete">
+          <CopyIcon />
+          <Typography type="body2" color="secondary" className={classes.actionsTyping}>URL</Typography>
         </IconButton>
         <Snackbar
           anchorOrigin={{
