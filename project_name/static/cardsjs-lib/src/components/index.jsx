@@ -6,7 +6,8 @@ import classNames from 'classnames';
 import Button from 'material-ui/Button';
 import Grid from 'material-ui/Grid';
 import IconButton from 'material-ui/IconButton';
-import {default as UpIcon} from 'material-ui-icons/ArrowUpward'
+import { default as UpIcon } from 'material-ui-icons/ArrowUpward'
+import { CircularProgress } from 'material-ui/Progress';
 
 import {default as MainAppBar} from './appbar/appBar.jsx'
 import {default as LeftDrawer} from './drawers/leftDrawers.jsx'
@@ -20,7 +21,6 @@ const styles = theme => {
     root: {
       width: '100%',
       zIndex: 1,
-      // height: 'auto', marginTop: theme.spacing.unit * 3, overflow: 'overlay'
     },
     appFrame: {
       position: 'relative',
@@ -40,7 +40,6 @@ const styles = theme => {
         marginLeft: `0px`
       },
       flexGrow: 1,
-      backgroundColor: theme.palette.background.default,
       paddingTop: theme.spacing.unit * 3,
       transition: theme
         .transitions
@@ -48,7 +47,6 @@ const styles = theme => {
           easing: theme.transitions.easing.sharp,
           duration: theme.transitions.duration.leavingScreen
         }),
-      // height: 'calc(100% - 56px)',
       marginTop: 56,
       [
         theme
@@ -68,7 +66,14 @@ const styles = theme => {
         .create('margin', {
           easing: theme.transitions.easing.easeOut,
           duration: theme.transitions.duration.enteringScreen
-        })
+        }),
+        [
+          theme
+            .breakpoints
+            .down('lg')
+        ]: {
+          marginLeft: 'unset',
+        }
     },
     loadMore: {
       margin: '30 0 30 0', 
@@ -79,6 +84,9 @@ const styles = theme => {
       display: 'inline-flex',
       marginRight: 20
     },
+    progress: {
+      margin: '20px 45%'
+    }
   });
 }
 
@@ -87,7 +95,8 @@ class CardsView extends React.Component {
     super(props);
     this.state = {
       leftDrawerOpen: false,
-      paramsObject:{}
+      paramsObject: {},
+      loading: false
     };
   }
 
@@ -103,7 +112,7 @@ class CardsView extends React.Component {
 
   getResources() {
     fetch(this.props.resources_url, {credentials: 'include'}).then((response) => response.json()).then((data) => {
-      this.setState({resources: data.objects, nextURL: data.meta.next})
+      this.setState({ resources: data.objects, nextURL: data.meta.next, loading: false})
     })
 
     let categories = []
@@ -184,7 +193,11 @@ class CardsView extends React.Component {
       fetch(nextURL, { credentials: 'include' }).then((response) => response.json()).then((data) => {
         let currentResources = this.state.resources;
         currentResources.push(...data.objects)
-        this.setState({resources: currentResources, nextURL:data.meta.next})
+        this.setState({
+          resources: currentResources,
+          nextURL: data.meta.next,
+          loading: false
+        })
       })
     } else {
       this.setState({endOfResources: true})
@@ -192,11 +205,26 @@ class CardsView extends React.Component {
   }
 
   componentWillMount() {
-    this.getResources()
+    this.setState({ loading: true }, () => {
+      this.getResources()
+    })
+  }
+
+  componentDidMount() {
+    window.screenTop = 0
+    let timer = null;
+    window.addEventListener('scroll', () => {
+      let element = document.body;
+      if ((element.scrollHeight - element.scrollTop) < (element.clientHeight + 400)) {
+        !this.state.loading && this.state.nextURL && this.setState({ loading: true }, () => {
+           this.getNextResources()
+        })
+      }
+    })
   }
 
   handleDrawerOpen() {
-    this.setState({leftDrawerOpen: true});
+    this.setState({leftDrawerOpen: !this.state.leftDrawerOpen});
   };
 
   handleDrawerClose() {
@@ -206,7 +234,7 @@ class CardsView extends React.Component {
   render() {
     const {classes} = this.props;
     return (
-      <div className={classes.root} >
+      <div className={classes.root} >  
         <div className={classes.appFrame}>
           <MainAppBar
             appBarShift={this.state.leftDrawerOpen}
@@ -234,16 +262,21 @@ class CardsView extends React.Component {
             handleDrawerClose={() => {
             this.handleDrawerClose()
           }}
-            drawerOpen={this.state.leftDrawerOpen}/>
+            drawerOpen={this.state.leftDrawerOpen}
+            title={this.props.title}
+          />
 
-          <main
+          <main 
+            id='mainId'  
             className={classNames(classes.content, this.state.leftDrawerOpen && classes.contentShift)}>
             <CardsGrid
               resources={this.state.resources
               ? this.state.resources
                 : []} />
-            { 
-              this.state.nextURL
+            {
+              this.state.loading
+            ? <CircularProgress className={classes.progress} />
+            : this.state.nextURL
               ? <div className={classes.loadMore}>
                   <Button raised onClick={() => { this.getNextResources() }} className={classes.loadMoreButton}>Load More</Button>                  
                   <IconButton className={classes.loadMoreButton} onClick={() => { window.scrollTo(0, 0) }} aria-label="Go Up">
