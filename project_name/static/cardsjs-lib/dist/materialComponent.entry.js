@@ -37365,24 +37365,7 @@ var CardsView = function (_React$Component) {
               className: (0, _classnames2.default)(classes.content, this.state.leftDrawerOpen && classes.contentShift) },
             _react2.default.createElement(_cardsGrid2.default, {
               resources: this.state.resources ? this.state.resources : [] }),
-            this.state.loading ? _react2.default.createElement(_Progress.CircularProgress, { className: classes.progress }) : this.state.nextURL ? _react2.default.createElement(
-              'div',
-              { className: classes.loadMore },
-              _react2.default.createElement(
-                _Button2.default,
-                { raised: true, onClick: function onClick() {
-                    _this8.getNextResources();
-                  }, className: classes.loadMoreButton },
-                'Load More'
-              ),
-              _react2.default.createElement(
-                _IconButton2.default,
-                { className: classes.loadMoreButton, onClick: function onClick() {
-                    window.scrollTo(0, 0);
-                  }, 'aria-label': 'Go Up' },
-                _react2.default.createElement(_ArrowUpward2.default, null)
-              )
-            ) : this.state.resources && this.state.resources.length != 0 && _react2.default.createElement(
+            this.state.loading ? _react2.default.createElement(_Progress.CircularProgress, { className: classes.progress }) : _react2.default.createElement(
               'div',
               { className: classes.loadMore },
               _react2.default.createElement(

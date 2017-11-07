@@ -212,7 +212,7 @@ class CardsView extends React.Component {
 
   componentWillMount() {
     this.setState({ loading: true }, () => {
-      this.getResources()
+      this.getResources() 
     })
   }
 
@@ -291,20 +291,11 @@ class CardsView extends React.Component {
             {
               this.state.loading
             ? <CircularProgress className={classes.progress} />
-            : this.state.nextURL
-              ? <div className={classes.loadMore}>
-                  <Button raised onClick={() => { this.getNextResources() }} className={classes.loadMoreButton}>Load More</Button>                  
-                  <IconButton className={classes.loadMoreButton} onClick={() => { window.scrollTo(0, 0) }} aria-label="Go Up">
-                    <UpIcon />
-                  </IconButton>
-                </div>
-                : this.state.resources &&
-                this.state.resources.length != 0 &&
-                <div className={classes.loadMore}>
-                  <IconButton className={classes.loadMoreButton} onClick={() => { window.scrollTo(0, 0) }} aria-label="Go Up">
-                    <UpIcon />
-                  </IconButton>
-                </div>
+            : <div className={classes.loadMore}>                 
+                <IconButton className={classes.loadMoreButton} onClick={() => { window.scrollTo(0, 0) }} aria-label="Go Up">
+                  <UpIcon />
+                </IconButton>
+              </div>
             }
           </main>
           
