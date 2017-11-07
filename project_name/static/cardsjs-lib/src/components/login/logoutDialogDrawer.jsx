@@ -76,10 +76,7 @@ class LogoutDialog extends React.Component {
           </ListItem>
         </List>
         <Dialog
-          open={this.state.open}
-          onRequestClose={() => {
-          this.handleRequestClose()
-          }}>        
+          open={this.state.open}>        
           <DialogTitle>Logout</DialogTitle>
           <DialogContent>
             <DialogContentText>Are you sure you want to logout cartoview?</DialogContentText>

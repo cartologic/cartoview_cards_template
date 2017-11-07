@@ -75,11 +75,7 @@ class LoginDialog extends React.Component {
         }}
           color='contrast'
           className={classes.loginButton}>Login</Button>
-        <Dialog
-          open={this.state.open}
-          onRequestClose={() => {
-          this.handleRequestClose()
-        }}>
+        <Dialog open={this.state.open}>
           <DialogTitle>Login</DialogTitle>
           <DialogContent>
             <DialogContentText ></DialogContentText>

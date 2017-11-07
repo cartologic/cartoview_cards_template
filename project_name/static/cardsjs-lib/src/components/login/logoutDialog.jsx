@@ -57,6 +57,7 @@ class LogoutDialog extends React.Component {
   };
 
   handleCancel() {
+    this.props.handleRequestClose();
     this.setState({open: false});
   };
 
@@ -69,10 +70,7 @@ class LogoutDialog extends React.Component {
           color='contrast'
           className={classes.loginButton}>Logout</Button>
         <Dialog
-          open={this.state.open}
-          onRequestClose={() => {
-          this.handleRequestClose()
-        }}>
+          open={this.state.open}>
           <DialogTitle>Logout</DialogTitle>
           <DialogContent>
             <DialogContentText>Are you sure you want to logout cartoview?</DialogContentText>
