@@ -17,11 +17,8 @@ import {default as SearchBar} from './searchBar.jsx'
 const drawerWidth = 240;
 const styles = theme => {
   return ({
-    title: {
-      flexGrow: 1
-    },
     appBar: {
-      position: 'absolute',
+      position: 'fixed',
       transition: theme
         .transitions
         .create([
@@ -29,26 +26,11 @@ const styles = theme => {
         ], {
           easing: theme.transitions.easing.sharp,
           duration: theme.transitions.duration.leavingScreen
-        })
+        }),
     },
-    appBarShift: {
-      marginLeft: drawerWidth,
-      width: `calc(100% - ${drawerWidth}px)`,
-      transition: theme
-        .transitions
-        .create([
-          'margin', 'width'
-        ], {
-          easing: theme.transitions.easing.easeOut,
-          duration: theme.transitions.duration.enteringScreen
-        })
-    },
-    menuButton: {
-      marginLeft: 12,
-      marginRight: 20
-    },
-    hide: {
-      display: 'none'
+    Toolbar: {
+      padding: 0,
+      minHeight: '55 !important',
     },
   });
 }
@@ -57,7 +39,6 @@ class MainViewAppBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      appBarShift: this.props.appBarShift,
       keywords: this.props.keywords,
       categories: this.props.categories,
       owners: this.props.owners,
@@ -67,7 +48,6 @@ class MainViewAppBar extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (this.props != nextProps) {
       this.setState({
-        appBarShift: nextProps.appBarShift,
         keywords: nextProps.keywords,
         categories: nextProps.categories,
         owners: nextProps.owners,
@@ -79,20 +59,18 @@ class MainViewAppBar extends React.Component {
     const {classes} = this.props;
     return (
       <AppBar
-        className={classNames(classes.appBar, this.state.appBarShift && classes.appBarShift)}>
-        <Toolbar disableGutters={!this.state.appBarShift}>
+        className={classNames(classes.appBar)}>
+        <Toolbar className={classes.Toolbar}>
           <IconButton
             color="contrast"
             aria-label="Select Resource"
             onClick={() => {
             this.props.handleDrawerOpen()
             }}
-            className={classNames(classes.menuButton, this.state.appBarShift && classes.hide)}>
+            className={classNames(classes.menuButton)}>
             <MenuIcon/>
           </IconButton>
-          <Typography type="headline" color="inherit" className={classes.title} noWrap>
-            {this.props.title}
-          </Typography>
+          {this.props.title}
 
           {
             this.state.keywords
@@ -124,14 +102,11 @@ class MainViewAppBar extends React.Component {
 MainViewAppBar.propTypes = {
   classes: PropTypes.object.isRequired,
 
-  // when drawer open
-  appBarShift: PropTypes.bool.isRequired,
-
   // func sets the drawer open or close
   handleDrawerOpen: PropTypes.func.isRequired,
 
   // title of the view
-  title: PropTypes.string.isRequired,
+  title: PropTypes.object.isRequired,
 
   // when all filters fetched
   // filtersReady: PropTypes.bool.isRequired,

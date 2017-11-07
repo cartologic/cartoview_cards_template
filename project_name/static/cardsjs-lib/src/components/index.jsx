@@ -4,6 +4,7 @@ import {withStyles} from 'material-ui/styles';
 import classNames from 'classnames';
 
 import Button from 'material-ui/Button';
+import Typography from 'material-ui/Typography';
 import Grid from 'material-ui/Grid';
 import IconButton from 'material-ui/IconButton';
 import { default as UpIcon } from 'material-ui-icons/ArrowUpward'
@@ -31,7 +32,7 @@ const styles = theme => {
     },
     content: {
       width: '100%',
-      marginLeft: `-${drawerWidth + 1}px`,
+      // marginLeft: `-${drawerWidth + 1}px`,
       [
         theme
           .breakpoints
@@ -47,6 +48,7 @@ const styles = theme => {
           easing: theme.transitions.easing.sharp,
           duration: theme.transitions.duration.leavingScreen
         }),
+
       marginTop: 56,
       [
         theme
@@ -60,7 +62,7 @@ const styles = theme => {
       }
     },
     contentShift: {
-      marginLeft: 0,
+      marginLeft: 240,
       transition: theme
         .transitions
         .create('margin', {
@@ -86,7 +88,11 @@ const styles = theme => {
     },
     progress: {
       margin: '20px 45%'
-    }
+    },
+    title: {
+      flexGrow: 1,
+      fontSize: 18,
+    },
   });
 }
 
@@ -232,7 +238,13 @@ class CardsView extends React.Component {
   };
 
   render() {
-    const {classes} = this.props;
+    const { classes } = this.props;
+    const title=(
+      <Typography type="body1" color="inherit" className={classes.title} noWrap>
+        {this.props.title}
+      </Typography>
+    )
+
     return (
       <div className={classes.root} >  
         <div className={classes.appFrame}>
@@ -241,7 +253,7 @@ class CardsView extends React.Component {
             handleDrawerOpen={() => {
             this.handleDrawerOpen()
           }}
-            title={this.props.title}
+            title={title}
             filtersReady={this.state.categories && this.state.keywords && this.state.owners
             ? true
             : false}
@@ -260,10 +272,13 @@ class CardsView extends React.Component {
 
           <LeftDrawer
             handleDrawerClose={() => {
-            this.handleDrawerClose()
-          }}
+              this.handleDrawerClose()
+            }}
+            handleDrawerOpen={() => {
+              this.handleDrawerOpen()
+            }}
             drawerOpen={this.state.leftDrawerOpen}
-            title={this.props.title}
+            title={title}
           />
 
           <main 
