@@ -52104,9 +52104,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var styles = function styles(theme) {
   return {
     rootGrid: {
-      width: '94%',
-      paddingRight: '3%',
-      paddingLeft: '3%'
+      width: '98%'
     },
     gridCell: {}
   };
@@ -52247,23 +52245,32 @@ var _copySnakeBar = __webpack_require__(452);
 
 var _copySnakeBar2 = _interopRequireDefault(_copySnakeBar);
 
+var _MoreHoriz = __webpack_require__(464);
+
+var _MoreHoriz2 = _interopRequireDefault(_MoreHoriz);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// import {default as DetailsIcon} from 'material-ui-icons/Details';
 var styles = function styles(theme) {
   return {
     card: {
-      display: 'flex'
-    },
-    details: {
       display: 'flex',
-      flexDirection: 'column',
-      // width: 200,
-      // maxWidth:200,
-      minWidth: '70%'
+      padding: '10 0 10 10',
+      flexDirection: 'row',
+      justifyContent: 'flex-start',
+      flexWrap: 'no-wrap'
     },
     content: {
-      flex: '1 0 auto',
-      padding: 10
+      display: 'flex',
+      justifyContent: 'center',
+      flexDirection: 'column',
+      flex: '1 0 50%',
+      maxWidth: '50%'
+    },
+    detailsButton: {
+      flex: '1 0 10%',
+      margin: 'auto 0'
     },
     username: {
       fontWeight: 'bolder'
@@ -52282,12 +52289,7 @@ var styles = function styles(theme) {
       margin: '0 20 0 0'
     },
     cover: {
-      // width: 140,
-      // maxWidth: 140,
-      minWidth: '30%',
-      height: 0,
-      // maxHeight: 140,
-      paddingTop: '120px',
+      flex: '1 0 25%',
       backgroundSize: 'cover'
     },
     controls: {
@@ -52302,8 +52304,6 @@ var styles = function styles(theme) {
     }
   };
 };
-// import {default as DetailsIcon} from 'material-ui-icons/Details';
-
 
 function MediaControlCard(props) {
   var classes = props.classes,
@@ -52329,65 +52329,26 @@ function MediaControlCard(props) {
         title: title
       }),
       _react2.default.createElement(
-        'div',
-        { className: classes.details },
+        _Card.CardContent,
+        { className: classes.content },
         _react2.default.createElement(
-          _Card.CardContent,
-          { className: classes.content },
-          _react2.default.createElement(
-            _Typography2.default,
-            { type: 'body1', noWrap: true },
-            title
-          ),
-          _react2.default.createElement(
-            _Typography2.default,
-            { type: 'body2', color: 'secondary' },
-            _react2.default.createElement(
-              'span',
-              { className: classes.username },
-              owner,
-              ' '
-            ),
-            ' | ',
-            new Date(date).toDateString()
-          ),
-          _react2.default.createElement(
-            _Typography2.default,
-            { gutterBottom: true, noWrap: true },
-            abstract
-          )
+          _Typography2.default,
+          { type: 'body1', noWrap: true },
+          title
         ),
         _react2.default.createElement(
-          _Card.CardContent,
-          { className: classes.contentActions },
-          launch_app_url && _react2.default.createElement(
-            _IconButton2.default,
-            { className: classes.iconButton, 'aria-label': 'Delete', onClick: function onClick() {
-                return window.location.href = launch_app_url;
-              } },
-            _react2.default.createElement(_Launch2.default, null),
-            ' ',
-            _react2.default.createElement(
-              _Typography2.default,
-              { type: 'body2', color: 'secondary', className: classes.actionsTyping },
-              'Open'
-            )
-          ),
-          _react2.default.createElement(
-            _IconButton2.default,
-            { className: classes.iconButton, 'aria-label': 'Delete', onClick: function onClick() {
-                return window.location.href = detail_url;
-              } },
-            _react2.default.createElement(_FormatListbulleted2.default, null),
-            ' ',
-            _react2.default.createElement(
-              _Typography2.default,
-              { type: 'body2', color: 'secondary', className: classes.actionsTyping },
-              'Details'
-            )
-          ),
-          _react2.default.createElement(_copySnakeBar2.default, { detail_url: detail_url, className: classes.iconButton })
+          _Typography2.default,
+          { type: 'body2', color: 'secondary' },
+          new Date(date).toDateString()
         )
+      ),
+      _react2.default.createElement(
+        _IconButton2.default
+        /* onClick={} */
+        ,
+        { color: 'contrast',
+          className: classes.detailsButton },
+        _react2.default.createElement(_MoreHoriz2.default, null)
       )
     )
   );
@@ -54492,6 +54453,49 @@ module.exports = function (css) {
 	return fixedCss;
 };
 
+
+/***/ }),
+/* 464 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(global) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _pure = __webpack_require__(16);
+
+var _pure2 = _interopRequireDefault(_pure);
+
+var _SvgIcon = __webpack_require__(14);
+
+var _SvgIcon2 = _interopRequireDefault(_SvgIcon);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var SvgIconCustom = global.__MUI_SvgIcon__ || _SvgIcon2.default;
+
+var _ref = _react2.default.createElement('path', { d: 'M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z' });
+
+var MoreHoriz = function MoreHoriz(props) {
+  return _react2.default.createElement(
+    SvgIconCustom,
+    props,
+    _ref
+  );
+};
+
+MoreHoriz = (0, _pure2.default)(MoreHoriz);
+MoreHoriz.muiName = 'SvgIcon';
+
+exports.default = MoreHoriz;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15)))
 
 /***/ })
 /******/ ]);

@@ -12,22 +12,27 @@ import {default as LaunchIcon} from 'material-ui-icons/Launch';
 import {default as DetailsIcon} from 'material-ui-icons/FormatListbulleted';
 import { default as CopyIcon } from 'material-ui-icons/ContentCopy';
 import SimpleSnackbar from './copySnakeBar.jsx'
+import MoreHoriz from 'material-ui-icons/MoreHoriz'
 
 
 const styles = theme => ({
   card: {
     display: 'flex',
-  },
-  details: {
-    display: 'flex',
-    flexDirection: 'column',
-    // width: 200,
-    // maxWidth:200,
-    minWidth: '70%'
+    padding: '10 0 10 10',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    flexWrap:'no-wrap'
   },
   content: {
-    flex: '1 0 auto',
-    padding: 10,
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    flex: '1 0 50%',
+    maxWidth: '50%'
+  },
+  detailsButton: {
+    flex: '1 0 10%',
+    margin: 'auto 0',
   },
   username: {
     fontWeight: 'bolder'
@@ -46,13 +51,8 @@ const styles = theme => ({
     margin: '0 20 0 0',
   },
   cover: {
-    // width: 140,
-    // maxWidth: 140,
-    minWidth: '30%',
-    height: 0,
-    // maxHeight: 140,
-    paddingTop: '120px',
-    backgroundSize: 'cover'
+    flex: '1 0 25%',
+    backgroundSize: 'cover',
   },
   controls: {
     display: 'flex',
@@ -77,33 +77,22 @@ function MediaControlCard(props) {
             image={thumbnail_url}
             title={title}
           />  
-        <div className={classes.details}>
-          <CardContent className={classes.content}>
-            <Typography type="body1" noWrap>{title}</Typography>
-            
-              <Typography type="body2" color="secondary">
-              <span className={classes.username}>{owner} </span> | {new Date(date).toDateString()}
-              </Typography>
-              <Typography gutterBottom noWrap>{abstract}</Typography>            
-          </CardContent>
-          
-          <CardContent className={classes.contentActions}>
-            {
-              launch_app_url &&   
-              <IconButton className={classes.iconButton} aria-label="Delete" onClick={()=>window.location.href=launch_app_url}>
-                <LaunchIcon /> <Typography type="body2" color="secondary" className={classes.actionsTyping}>Open</Typography>
-              </IconButton>
-            }  
 
-            <IconButton className={classes.iconButton} aria-label="Delete" onClick={()=>window.location.href=detail_url}>
-              <DetailsIcon /> <Typography type="body2" color="secondary" className={classes.actionsTyping}>Details</Typography>
-            </IconButton>
-            <SimpleSnackbar detail_url={detail_url} className={classes.iconButton}/>
-          </CardContent>
-          
-        </div>
+        <CardContent className={classes.content}>
+          <Typography type="body1" noWrap>{title}</Typography>
+          <Typography type="body2" color="secondary">
+            {new Date(date).toDateString()}
+          </Typography>
+        </CardContent>
 
+        <IconButton
+            /* onClick={} */
+          color="contrast"
+          className={classes.detailsButton}>
+          <MoreHoriz/>
+        </IconButton>
       </Card>
+
     </div>
   );
 }

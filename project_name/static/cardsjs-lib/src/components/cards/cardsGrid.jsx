@@ -9,9 +9,7 @@ import {default as SingleCard} from './singleCard.jsx'
 
 const styles = theme => ({
   rootGrid: {
-    width: '94%',
-    paddingRight: '3%',
-    paddingLeft: '3%',
+    width: '98%',
   },
   gridCell: {},
 })
