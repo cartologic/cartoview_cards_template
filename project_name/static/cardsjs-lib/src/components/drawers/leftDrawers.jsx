@@ -16,6 +16,7 @@ import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import MenuIcon from 'material-ui-icons/Menu';
 import Typography from 'material-ui/Typography';
+import Avatar from 'material-ui/Avatar';
 
 import {default as LogoutDrawerButton} from '../login/logoutDialogDrawer.jsx'
 
@@ -45,6 +46,13 @@ const styles = theme => ({
   Toolbar:{
     padding: '0 !important',
     minHeight: '55 !important'
+  },
+  countAvatar: {
+    width: 'max-content',
+    minWidth: 20,
+    height: 15,
+    padding: 3,
+    fontSize: 'small'
   }
 })
 
@@ -72,13 +80,15 @@ class MainViewDrawer extends React.Component {
             <ListItemIcon>
               <MapIcon/>
             </ListItemIcon>
-            <ListItemText primary={"Maps"}/>
+            <ListItemText primary={"Maps"} />
+            <Avatar className={classes.countAvatar}>{this.props.count.mapsCount}</Avatar>
           </ListItem>
           <ListItem onClick={() => window.location.href = urls.LAYERS_URL} button>
             <ListItemIcon>
               <MapIcon/>
             </ListItemIcon>
             <ListItemText primary={"Layers"}/>
+            <Avatar className={classes.countAvatar}>{this.props.count.layersCount}</Avatar>
           </ListItem>
           <Divider/>
           <ListItem onClick={() => window.location.href = urls.APPS_URL} button>
@@ -86,6 +96,7 @@ class MainViewDrawer extends React.Component {
               <GridIcon/>
             </ListItemIcon>
             <ListItemText primary={"Apps"}/>
+            <Avatar className={classes.countAvatar}>{this.props.count.appsCount}</Avatar>
           </ListItem>
         </List>
 

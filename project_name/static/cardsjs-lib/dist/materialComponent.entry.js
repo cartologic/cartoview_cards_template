@@ -37047,6 +37047,11 @@ var CardsView = function (_React$Component) {
 
       var classes = this.props.classes;
 
+      var count = {
+        mapsCount: this.state.mapsCount,
+        layersCount: this.state.layersCount,
+        appsCount: this.state.appsCount
+      };
       var title = _react2.default.createElement(
         _Typography2.default,
         { type: 'body1', color: 'inherit', className: classes.title, noWrap: true },
@@ -37084,7 +37089,8 @@ var CardsView = function (_React$Component) {
               _this9.handleDrawerOpen();
             },
             drawerOpen: this.state.leftDrawerOpen,
-            title: title
+            title: title,
+            count: count
           }),
           _react2.default.createElement(
             'main',
@@ -50954,6 +50960,10 @@ var _Typography = __webpack_require__(25);
 
 var _Typography2 = _interopRequireDefault(_Typography);
 
+var _Avatar = __webpack_require__(73);
+
+var _Avatar2 = _interopRequireDefault(_Avatar);
+
 var _logoutDialogDrawer = __webpack_require__(435);
 
 var _logoutDialogDrawer2 = _interopRequireDefault(_logoutDialogDrawer);
@@ -50993,6 +51003,13 @@ var styles = function styles(theme) {
     Toolbar: {
       padding: '0 !important',
       minHeight: '55 !important'
+    },
+    countAvatar: {
+      width: 'max-content',
+      minWidth: 20,
+      height: 15,
+      padding: 3,
+      fontSize: 'small'
     }
   };
 };
@@ -51040,7 +51057,12 @@ var MainViewDrawer = function (_React$Component) {
             null,
             _react2.default.createElement(_Map2.default, null)
           ),
-          _react2.default.createElement(_List.ListItemText, { primary: "Maps" })
+          _react2.default.createElement(_List.ListItemText, { primary: "Maps" }),
+          _react2.default.createElement(
+            _Avatar2.default,
+            { className: classes.countAvatar },
+            this.props.count.mapsCount
+          )
         ),
         _react2.default.createElement(
           _List.ListItem,
@@ -51052,7 +51074,12 @@ var MainViewDrawer = function (_React$Component) {
             null,
             _react2.default.createElement(_Map2.default, null)
           ),
-          _react2.default.createElement(_List.ListItemText, { primary: "Layers" })
+          _react2.default.createElement(_List.ListItemText, { primary: "Layers" }),
+          _react2.default.createElement(
+            _Avatar2.default,
+            { className: classes.countAvatar },
+            this.props.count.layersCount
+          )
         ),
         _react2.default.createElement(_Divider2.default, null),
         _react2.default.createElement(
@@ -51065,7 +51092,12 @@ var MainViewDrawer = function (_React$Component) {
             null,
             _react2.default.createElement(_GridOn2.default, null)
           ),
-          _react2.default.createElement(_List.ListItemText, { primary: "Apps" })
+          _react2.default.createElement(_List.ListItemText, { primary: "Apps" }),
+          _react2.default.createElement(
+            _Avatar2.default,
+            { className: classes.countAvatar },
+            this.props.count.appsCount
+          )
         )
       );
       var drawer = _react2.default.createElement(

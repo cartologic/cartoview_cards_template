@@ -259,6 +259,11 @@ class CardsView extends React.Component {
 
   render() {
     const { classes } = this.props;
+    const count = {
+      mapsCount: this.state.mapsCount,
+      layersCount: this.state.layersCount,
+      appsCount: this.state.appsCount,
+    }
     const title=(
       <Typography type="body1" color="inherit" className={classes.title} noWrap>
         {this.props.title}
@@ -299,6 +304,7 @@ class CardsView extends React.Component {
             }}
             drawerOpen={this.state.leftDrawerOpen}
             title={title}
+            count ={count}
           />
 
           <main 
