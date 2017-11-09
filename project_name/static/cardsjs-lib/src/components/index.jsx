@@ -210,6 +210,26 @@ class CardsView extends React.Component {
     }
   }
 
+  getApps() {
+    let url = urls.APP_API_URL
+    let apps = [] 
+    
+    return new Promise((resolve, reject) => {
+      fetch(url, { credentials: 'include' })
+        .then(res => res.json())
+        .then(data => {
+          return data.objects.map((o) => {
+            apps.push({
+              appTitle: o.title,
+              appName: o.name,
+              count: o.app_instance_count,
+            })
+          })
+        })
+      resolve(apps)
+    })
+  }
+
   resourcesCount() {
     const resources = [
       { countType: 'layersCount', url: "/api/layers/?limit=1" },
@@ -230,9 +250,20 @@ class CardsView extends React.Component {
   }
 
   componentWillMount() {
+      
+    
     this.setState({ loading: true }, () => {
       this.resourcesCount()
-      .then((state)=>this.getResources())
+        .then((state) => {
+          this.getApps()
+            .then((apps) => {
+              this.setState({ apps }, () => {
+               this.getResources()
+            })
+          })
+    
+        })
+      
     })
   }
 
@@ -304,7 +335,8 @@ class CardsView extends React.Component {
             }}
             drawerOpen={this.state.leftDrawerOpen}
             title={title}
-            count ={count}
+            count={count}
+            apps={this.state.apps}
           />
 
           <main 

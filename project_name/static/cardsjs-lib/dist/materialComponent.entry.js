@@ -36986,6 +36986,27 @@ var CardsView = function (_React$Component) {
       }
     }
   }, {
+    key: 'getApps',
+    value: function getApps() {
+      var url = urls.APP_API_URL;
+      var apps = [];
+
+      return new Promise(function (resolve, reject) {
+        fetch(url, { credentials: 'include' }).then(function (res) {
+          return res.json();
+        }).then(function (data) {
+          return data.objects.map(function (o) {
+            apps.push({
+              appTitle: o.title,
+              appName: o.name,
+              count: o.app_instance_count
+            });
+          });
+        });
+        resolve(apps);
+      });
+    }
+  }, {
     key: 'resourcesCount',
     value: function resourcesCount() {
       var _this6 = this;
@@ -37010,7 +37031,11 @@ var CardsView = function (_React$Component) {
 
       this.setState({ loading: true }, function () {
         _this7.resourcesCount().then(function (state) {
-          return _this7.getResources();
+          _this7.getApps().then(function (apps) {
+            _this7.setState({ apps: apps }, function () {
+              _this7.getResources();
+            });
+          });
         });
       });
     }
@@ -37090,7 +37115,8 @@ var CardsView = function (_React$Component) {
             },
             drawerOpen: this.state.leftDrawerOpen,
             title: title,
-            count: count
+            count: count,
+            apps: this.state.apps
           }),
           _react2.default.createElement(
             'main',
