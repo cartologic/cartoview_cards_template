@@ -12,13 +12,15 @@ import Typography from 'material-ui/Typography';
 
 
 const styles = theme => ({
-  root: {display: 'inline-flex'},
   close: {
     width: theme.spacing.unit * 4,
     height: theme.spacing.unit * 4,
   },
   iconButton: {
     display: 'inline-flex',
+  },
+  copyButton: {
+    width: 'unset'
   },
   actionsTyping: {
     fontSize:'13px !important'
@@ -29,65 +31,58 @@ class SimpleSnackbar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: false,
+      open: this.props.open,
       message: null,
     };
   }
 
-  handleClick() {  
-    this.setState({ open: true });
-  };
+  componentWillReceiveProps(nextProps) {
+    if (this.props !== nextProps) {
+      this.setState({open: nextProps.open})
+    }
+  }
 
   handleRequestClose (event, reason) {
     if (reason === 'clickaway') {
       return;
     }
-
     this.setState({ open: false });
   };
 
   render() {
     const { classes } = this.props;
     return (
-      <div className={classes.root}>
-        <IconButton
-          onClick={() => { copy(String(window.location.origin+this.props.detail_url));this.handleClick()}}
-          className={classes.iconButton}
-          aria-label="Delete">
-          <CopyIcon />
-          <Typography type="body2" color="secondary" className={classes.actionsTyping}>URL</Typography>
-        </IconButton>
-        <Snackbar
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'left',
-          }}
-          open={this.state.open}
-          autoHideDuration={6000}
-          onRequestClose={this.handleRequestClose.bind(this)}
-          SnackbarContentProps={{
-            'aria-describedby': 'message-id',
-          }}
-          message={<span id="message-id">URL copied to clip board</span>}
-          action={[
-            <IconButton
-              key="close"
-              aria-label="Close"
-              color="inherit"
-              className={classes.close}
-              onClick={this.handleRequestClose.bind(this)}
-            >
-              <CloseIcon />
-            </IconButton>,
-          ]}
-        />
-      </div>
+      <Snackbar
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+        open={this.state.open}
+        autoHideDuration={6000}
+        onRequestClose={this.handleRequestClose.bind(this)}
+        SnackbarContentProps={{
+          'aria-describedby': 'message-id',
+        }}
+        message={<span id="message-id">URL copied to clip board</span>}
+        action={[
+          <IconButton
+            key="close"
+            aria-label="Close"
+            color="inherit"
+            className={classes.close}
+            onClick={this.handleRequestClose.bind(this)}
+          >
+            <CloseIcon />
+          </IconButton>,
+        ]}
+      />
     );
   }
 }
 
 SimpleSnackbar.propTypes = {
   classes: PropTypes.object.isRequired,
+  open: PropTypes.bool.isRequired,
 };
 
 export default withStyles(styles)(SimpleSnackbar);

@@ -7,12 +7,14 @@ import Typography from 'material-ui/Typography';
 import SkipPreviousIcon from 'material-ui-icons/SkipPrevious';
 import PlayArrowIcon from 'material-ui-icons/PlayArrow';
 import SkipNextIcon from 'material-ui-icons/SkipNext';
+
 import {default as LaunchIcon} from 'material-ui-icons/Launch';
-// import {default as DetailsIcon} from 'material-ui-icons/Details';
 import {default as DetailsIcon} from 'material-ui-icons/FormatListbulleted';
-import { default as CopyIcon } from 'material-ui-icons/ContentCopy';
+import {default as CopyIcon} from 'material-ui-icons/ContentCopy';
+// import {default as Details} from './detailsFullScreen.jsx';
+import { default as DetailsPopover } from './detailsPopover.jsx';
 import SimpleSnackbar from './copySnakeBar.jsx'
-import MoreHoriz from 'material-ui-icons/MoreHoriz'
+
 
 
 const styles = theme => ({
@@ -29,10 +31,6 @@ const styles = theme => ({
     flexDirection: 'column',
     flex: '1 0 50%',
     maxWidth: '50%'
-  },
-  detailsButton: {
-    flex: '1 0 10%',
-    margin: 'auto 0',
   },
   username: {
     fontWeight: 'bolder'
@@ -66,35 +64,48 @@ const styles = theme => ({
   },
 });
 
-function MediaControlCard(props) {
-  const { classes, theme } = props;
-  const {id, owner, title, date, thumbnail_url, abstract, detail_url, launch_app_url} = props;
-  return (
-    <div>
-      <Card className={classes.card}>
-        <CardMedia
-            className={classes.cover}
-            image={thumbnail_url}
-            title={title}
-          />  
+class MediaControlCard extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      snakeBarOpen: false,
+    };
+  }
 
-        <CardContent className={classes.content}>
-          <Typography type="body1" noWrap>{title}</Typography>
-          <Typography type="body2" color="secondary">
-            {new Date(date).toDateString()}
-          </Typography>
-        </CardContent>
+  handleCopyClick() {  
+    this.setState({ snakeBarOpen: true });
+  };
 
-        <IconButton
-            /* onClick={} */
-          color="contrast"
-          className={classes.detailsButton}>
-          <MoreHoriz/>
-        </IconButton>
-      </Card>
-
-    </div>
-  );
+  render(){
+    const { classes, theme } = this.props;
+    const {id, owner, title, date, thumbnail_url, abstract, detail_url, launch_app_url} = this.props;
+    return (
+      <div>
+        <Card className={classes.card}>
+          <CardMedia
+              className={classes.cover}
+              image={thumbnail_url}
+              title={title}
+            />  
+  
+          <CardContent className={classes.content}>
+            <Typography type="body1" noWrap>{title}</Typography>
+            <Typography type="body2" color="secondary">
+              {new Date(date).toDateString()}
+            </Typography>
+          </CardContent>
+  
+          <DetailsPopover
+            launch_app_url={launch_app_url}
+            detail_url = {detail_url}
+            className={classes.detailsButton} 
+            handleCopyClick={()=>{this.handleCopyClick()}}
+            />
+        </Card>
+        <SimpleSnackbar open={this.state.snakeBarOpen}/>
+      </div>
+    );
+  } 
 }
 
 MediaControlCard.propTypes = {
