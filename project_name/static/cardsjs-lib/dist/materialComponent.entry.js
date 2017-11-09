@@ -53671,6 +53671,10 @@ var _copyToClipboard = __webpack_require__(464);
 
 var _copyToClipboard2 = _interopRequireDefault(_copyToClipboard);
 
+var _Launch = __webpack_require__(456);
+
+var _Launch2 = _interopRequireDefault(_Launch);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -53773,11 +53777,11 @@ var AnchorPlayground = function (_React$Component) {
               _IconButton2.default,
               {
                 onClick: function onClick() {
-                  _this2.handleClickOpen();
+                  return window.location.href = launch_app_url;
                 },
                 color: 'contrast',
                 'aria-label': 'Filters' },
-              _react2.default.createElement(LaunchIcon, null),
+              _react2.default.createElement(_Launch2.default, null),
               _react2.default.createElement(
                 _Typography2.default,
                 { type: 'body2', color: 'secondary', className: classes.actionsTyping },

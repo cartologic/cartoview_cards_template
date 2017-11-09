@@ -10,6 +10,7 @@ import MoreHoriz from 'material-ui-icons/MoreHoriz'
 import { default as DetailsIcon } from 'material-ui-icons/FormatListbulleted'
 import { default as CopyIcon } from 'material-ui-icons/ContentCopy';
 import copy from 'copy-to-clipboard'
+import {default as LaunchIcon} from 'material-ui-icons/Launch';
 
 
 const styles = theme => ({
@@ -75,7 +76,7 @@ class AnchorPlayground extends React.Component {
             {
               launch_app_url &&  
               <IconButton
-                onClick={() => {this.handleClickOpen()}}
+                onClick={()=>window.location.href=launch_app_url}
                 color="contrast"
                 aria-label="Filters">
                 <LaunchIcon />
