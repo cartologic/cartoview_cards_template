@@ -250,18 +250,15 @@ class CardsView extends React.Component {
   }
 
   componentWillMount() {
-      
-    
     this.setState({ loading: true }, () => {
       this.resourcesCount()
         .then((state) => {
           this.getApps()
             .then((apps) => {
               this.setState({ apps }, () => {
-               this.getResources()
+                this.getResources()
             })
           })
-    
         })
       
     })

@@ -51049,7 +51049,8 @@ var MainViewDrawer = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (MainViewDrawer.__proto__ || Object.getPrototypeOf(MainViewDrawer)).call(this, props));
 
     _this.state = {
-      open: _this.props.drawerOpen
+      open: _this.props.drawerOpen,
+      apps: _this.props.apps
     };
     return _this;
   }
@@ -51059,7 +51060,8 @@ var MainViewDrawer = function (_React$Component) {
     value: function componentWillReceiveProps(NextProps) {
       if (this.props != NextProps) {
         this.setState({
-          open: NextProps.drawerOpen
+          open: NextProps.drawerOpen,
+          apps: NextProps.apps
         });
       }
     }
@@ -51070,6 +51072,25 @@ var MainViewDrawer = function (_React$Component) {
 
       var classes = this.props.classes;
 
+      var apps = this.state.apps && this.state.apps.map(function (app, i) {
+        if (app.count > 0) {
+          return _react2.default.createElement(
+            _List.ListItem,
+            { button: true, key: '' + i },
+            _react2.default.createElement(
+              _List.ListItemIcon,
+              null,
+              _react2.default.createElement(_GridOn2.default, null)
+            ),
+            _react2.default.createElement(_List.ListItemText, { primary: app.appTitle }),
+            _react2.default.createElement(
+              _Avatar2.default,
+              { className: classes.countAvatar },
+              app.count
+            )
+          );
+        }
+      });
       var NavigationList = _react2.default.createElement(
         _List2.default,
         null,
@@ -51124,7 +51145,9 @@ var MainViewDrawer = function (_React$Component) {
             { className: classes.countAvatar },
             this.props.count.appsCount
           )
-        )
+        ),
+        _react2.default.createElement(_Divider2.default, null),
+        apps
       );
       var drawer = _react2.default.createElement(
         'div',

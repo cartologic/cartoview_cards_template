@@ -61,19 +61,34 @@ class MainViewDrawer extends React.Component {
     super(props);
     this.state = {
       open: this.props.drawerOpen,
+      apps: this.props.apps
     };
   }
 
   componentWillReceiveProps(NextProps) {
     if (this.props != NextProps) {
       this.setState({
-        open: NextProps.drawerOpen
+        open: NextProps.drawerOpen,
+        apps: NextProps.apps
       })
     }
   }
 
   render() {
-    const {classes} = this.props;
+    const { classes } = this.props;
+    const apps = this.state.apps && this.state.apps.map((app, i) => {
+      if (app.count > 0) {
+        return (
+          <ListItem button key={`${i}`}>
+            <ListItemIcon>
+              <GridIcon />
+            </ListItemIcon>
+            <ListItemText primary={app.appTitle} />
+            <Avatar className={classes.countAvatar}>{app.count}</Avatar>
+          </ListItem>
+        )
+      }
+    })
     const NavigationList = (
         <List>
           <ListItem onClick={() => window.location.href = urls.MAPS_URL} button>
@@ -97,8 +112,11 @@ class MainViewDrawer extends React.Component {
             </ListItemIcon>
             <ListItemText primary={"Apps"}/>
             <Avatar className={classes.countAvatar}>{this.props.count.appsCount}</Avatar>
-          </ListItem>
-        </List>
+        </ListItem>
+          <Divider />
+          {apps}
+      </List>
+      
 
     );
     const drawer = (
