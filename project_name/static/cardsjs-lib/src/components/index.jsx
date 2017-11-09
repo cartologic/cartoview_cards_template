@@ -210,9 +210,29 @@ class CardsView extends React.Component {
     }
   }
 
+  resourcesCount() {
+    const resources = [
+      { countType: 'layersCount', url: "/api/layers/?limit=1" },
+      { countType: 'mapsCount', url: "/api/maps/?limit=1" },
+      { countType: 'appsCount', url: '/api/appinstances/?limit=1' },
+    ]
+    return new Promise((resolve, reject) => {
+      resources.map((resource) => {
+        fetch(resource.url, { credentials: 'include' })
+          .then(response => response.json())
+          .then(data => {
+            let resourceCount = resource.countType
+            this.setState({[resourceCount]:data.meta.total_count})
+          })
+      })
+      resolve("success")
+    })
+  }
+
   componentWillMount() {
     this.setState({ loading: true }, () => {
-      this.getResources() 
+      this.resourcesCount()
+      .then((state)=>this.getResources())
     })
   }
 

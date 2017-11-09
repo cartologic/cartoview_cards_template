@@ -36986,26 +36986,46 @@ var CardsView = function (_React$Component) {
       }
     }
   }, {
-    key: 'componentWillMount',
-    value: function componentWillMount() {
+    key: 'resourcesCount',
+    value: function resourcesCount() {
       var _this6 = this;
 
+      var resources = [{ countType: 'layersCount', url: "/api/layers/?limit=1" }, { countType: 'mapsCount', url: "/api/maps/?limit=1" }, { countType: 'appsCount', url: '/api/appinstances/?limit=1' }];
+      return new Promise(function (resolve, reject) {
+        resources.map(function (resource) {
+          fetch(resource.url, { credentials: 'include' }).then(function (response) {
+            return response.json();
+          }).then(function (data) {
+            var resourceCount = resource.countType;
+            _this6.setState(_defineProperty({}, resourceCount, data.meta.total_count));
+          });
+        });
+        resolve("success");
+      });
+    }
+  }, {
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      var _this7 = this;
+
       this.setState({ loading: true }, function () {
-        _this6.getResources();
+        _this7.resourcesCount().then(function (state) {
+          return _this7.getResources();
+        });
       });
     }
   }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
-      var _this7 = this;
+      var _this8 = this;
 
       window.screenTop = 0;
       var timer = null;
       window.addEventListener('scroll', function () {
         var element = document.body;
         if (element.scrollHeight - element.scrollTop < element.clientHeight + 400) {
-          !_this7.state.loading && _this7.state.nextURL && _this7.setState({ loading: true }, function () {
-            _this7.getNextResources();
+          !_this8.state.loading && _this8.state.nextURL && _this8.setState({ loading: true }, function () {
+            _this8.getNextResources();
           });
         }
       });
@@ -37023,7 +37043,7 @@ var CardsView = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this8 = this;
+      var _this9 = this;
 
       var classes = this.props.classes;
 
@@ -37042,7 +37062,7 @@ var CardsView = function (_React$Component) {
           _react2.default.createElement(_appBar2.default, {
             appBarShift: this.state.leftDrawerOpen,
             handleDrawerOpen: function handleDrawerOpen() {
-              _this8.handleDrawerOpen();
+              _this9.handleDrawerOpen();
             },
             title: title,
             filtersReady: this.state.categories && this.state.keywords && this.state.owners ? true : false,
@@ -37051,17 +37071,17 @@ var CardsView = function (_React$Component) {
             categories: this.state.categories && this.state.categories,
             owners: this.state.owners && this.state.owners,
             applyFilters: function applyFilters(paramsObject) {
-              _this8.setParamsString(paramsObject);
+              _this9.setParamsString(paramsObject);
             },
             searchResources: function searchResources(value) {
-              _this8.searchResources(value);
+              _this9.searchResources(value);
             } }),
           _react2.default.createElement(_leftDrawers2.default, {
             handleDrawerClose: function handleDrawerClose() {
-              _this8.handleDrawerClose();
+              _this9.handleDrawerClose();
             },
             handleDrawerOpen: function handleDrawerOpen() {
-              _this8.handleDrawerOpen();
+              _this9.handleDrawerOpen();
             },
             drawerOpen: this.state.leftDrawerOpen,
             title: title
