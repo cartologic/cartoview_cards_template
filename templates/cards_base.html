@@ -35,14 +35,18 @@
       LAYERS_URL: '/layers/',
       MAPS_URL: '/maps/',
       APPS_URL: '/apps/appinstances/',
+      DOCUMENTS_URL:'/documents/',
+
       LAYERS_API_URL: '/api/layers/?limit=10&offset=0',
       MAPS_API_URL: '/api/maps/?limit=10&offset=0',
       APP_INSTANCES_API_URL: '/api/appinstances/?limit=10&offset=0',
+      FEATURED_API_URL: '/api/featured/?',
+      DOCUMENTS_API_URL: '/api/documents/?',
       APP_API_URL: '/api/app/',
+
       KEYWORDS_API_URL: '/api/keywords',
       CATEGORIES_API_URL: '/api/categories',
       OWNERS_API_URL: '/api/owners',
-      FEATURED_API_URL: '/api/featured/?',
     }
     {% if request.user.is_authenticated %}
       const user_logged_in = true

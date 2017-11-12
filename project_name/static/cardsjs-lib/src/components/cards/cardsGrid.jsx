@@ -68,7 +68,7 @@ class CardsGrid extends React.Component {
     const { classes } = this.props;
     const title = this.props.title && 
       < Typography type="headline" className={classes.title} gutterBottom>
-        Featured Apps
+        Featured
       </Typography>
     return (
       <div>

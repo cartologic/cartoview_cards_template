@@ -62,7 +62,7 @@ const styles = theme => ({
   },
   appsList: {
     overflowY: 'overlay',
-    maxHeight:'calc(100% - 304px)'
+    maxHeight:'calc(100% - 350px)'
   },
   desktopLink: {
     position: 'absolute',
@@ -140,18 +140,17 @@ class MainViewDrawer extends React.Component {
           <ListItemText primary={"Layers"}/>
           <Avatar className={classes.countAvatar}>{this.props.count.layersCount}</Avatar>
         </ListItem>
+        <ListItem onClick={() => window.location.href = urls.DOCUMENTS_URL} button>
+          <ListItemIcon>
+            <MapIcon/>
+          </ListItemIcon>
+          <ListItemText primary={"Documents"}/>
+          <Avatar className={classes.countAvatar}>{this.props.count.documentsCount}</Avatar>
+        </ListItem>
         <Divider />        
       </List>
     );
     
-    const drawer = (
-      <div className={classes.drawerInner}>
-        {appsList}
-        {NavigationList}
-        {user_logged_in && <LogoutDrawerButton />}
-      </div>
-    );
-
     const desktopSiteLink = (
       <div className={classes.desktopLink}>
         <Typography className={classes.Owner} type="body2" color="secondary">
@@ -159,6 +158,15 @@ class MainViewDrawer extends React.Component {
         </Typography>
       </div>
     )
+
+    const drawer = (
+      <div className={classes.drawerInner}>
+        {appsList}
+        {NavigationList}
+        {user_logged_in && <LogoutDrawerButton />}
+        {desktopSiteLink}
+      </div>
+    );
 
     const drawerSmallDevices = (
       <div className={classes.drawerInner}>
@@ -180,8 +188,7 @@ class MainViewDrawer extends React.Component {
         </div>
         {appsList}
         {NavigationList}
-        {user_logged_in && <LogoutDrawerButton />}
-        <Divider /> 
+        {user_logged_in && <LogoutDrawerButton />} 
         {desktopSiteLink}
       </div>
     );

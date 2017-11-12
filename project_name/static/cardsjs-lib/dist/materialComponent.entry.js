@@ -37489,7 +37489,7 @@ var CardsView = function (_React$Component) {
     value: function resourcesCount() {
       var _this6 = this;
 
-      var resources = [{ countType: 'layersCount', url: "/api/layers/?limit=1" }, { countType: 'mapsCount', url: "/api/maps/?limit=1" }, { countType: 'appsCount', url: '/api/appinstances/?limit=1' }];
+      var resources = [{ countType: 'layersCount', url: "/api/layers/?limit=1" }, { countType: 'mapsCount', url: "/api/maps/?limit=1" }, { countType: 'appsCount', url: '/api/appinstances/?limit=1' }, { countType: 'documentsCount', url: '/api/documents/?limit=1' }];
       return new Promise(function (resolve, reject) {
         resources.map(function (resource) {
           fetch(resource.url, { credentials: 'include' }).then(function (response) {
@@ -37553,7 +37553,8 @@ var CardsView = function (_React$Component) {
       var count = {
         mapsCount: this.state.mapsCount,
         layersCount: this.state.layersCount,
-        appsCount: this.state.appsCount
+        appsCount: this.state.appsCount,
+        documentsCount: this.state.documentsCount
       };
       var title = _react2.default.createElement(
         _Typography2.default,
@@ -51483,7 +51484,7 @@ var styles = function styles(theme) {
     },
     appsList: {
       overflowY: 'overlay',
-      maxHeight: 'calc(100% - 304px)'
+      maxHeight: 'calc(100% - 350px)'
     },
     desktopLink: {
       position: 'absolute',
@@ -51613,15 +51614,24 @@ var MainViewDrawer = function (_React$Component) {
             this.props.count.layersCount
           )
         ),
+        _react2.default.createElement(
+          _List.ListItem,
+          { onClick: function onClick() {
+              return window.location.href = urls.DOCUMENTS_URL;
+            }, button: true },
+          _react2.default.createElement(
+            _List.ListItemIcon,
+            null,
+            _react2.default.createElement(_Map2.default, null)
+          ),
+          _react2.default.createElement(_List.ListItemText, { primary: "Documents" }),
+          _react2.default.createElement(
+            _Avatar2.default,
+            { className: classes.countAvatar },
+            this.props.count.documentsCount
+          )
+        ),
         _react2.default.createElement(_Divider2.default, null)
-      );
-
-      var drawer = _react2.default.createElement(
-        'div',
-        { className: classes.drawerInner },
-        appsList,
-        NavigationList,
-        user_logged_in && _react2.default.createElement(_logoutDialogDrawer2.default, null)
       );
 
       var desktopSiteLink = _react2.default.createElement(
@@ -51641,6 +51651,15 @@ var MainViewDrawer = function (_React$Component) {
             )
           )
         )
+      );
+
+      var drawer = _react2.default.createElement(
+        'div',
+        { className: classes.drawerInner },
+        appsList,
+        NavigationList,
+        user_logged_in && _react2.default.createElement(_logoutDialogDrawer2.default, null),
+        desktopSiteLink
       );
 
       var drawerSmallDevices = _react2.default.createElement(
@@ -51673,7 +51692,6 @@ var MainViewDrawer = function (_React$Component) {
         appsList,
         NavigationList,
         user_logged_in && _react2.default.createElement(_logoutDialogDrawer2.default, null),
-        _react2.default.createElement(_Divider2.default, null),
         desktopSiteLink
       );
 
@@ -52521,7 +52539,7 @@ var CardsGrid = function (_React$Component) {
       var title = this.props.title && _react2.default.createElement(
         _Typography2.default,
         { type: 'headline', className: classes.title, gutterBottom: true },
-        'Featured Apps'
+        'Featured'
       );
       return _react2.default.createElement(
         'div',

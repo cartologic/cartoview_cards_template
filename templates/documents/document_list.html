@@ -1,0 +1,14 @@
+{% extends 'cards_base.html' %}
+{% load static %}
+
+
+{% block extra_script %}
+<script type="text/javascript">
+  const props = {
+    title: 'Documents',
+    resources_url: urls.DOCUMENTS_API_URL,
+  }
+  var app = React.createElement(MaterialComponent, props);
+  ReactDOM.render(app, document.getElementById("app"));
+</script>
+{% endblock %}

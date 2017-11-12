@@ -251,6 +251,7 @@ class CardsView extends React.Component {
       { countType: 'layersCount', url: "/api/layers/?limit=1" },
       { countType: 'mapsCount', url: "/api/maps/?limit=1" },
       { countType: 'appsCount', url: '/api/appinstances/?limit=1' },
+      { countType: 'documentsCount', url: '/api/documents/?limit=1' },
     ]
     return new Promise((resolve, reject) => {
       resources.map((resource) => {
@@ -307,6 +308,7 @@ class CardsView extends React.Component {
       mapsCount: this.state.mapsCount,
       layersCount: this.state.layersCount,
       appsCount: this.state.appsCount,
+      documentsCount: this.state.documentsCount,
     }
     const title=(
       <Typography type="body1" color="inherit" className={classes.title} noWrap>
