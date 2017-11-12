@@ -53373,7 +53373,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var styles = function styles(theme) {
   return {
     detailsButton: {
-      flex: '1 0 10%',
       margin: 'auto 0'
     },
     content: {

@@ -15,7 +15,6 @@ import {default as LaunchIcon} from 'material-ui-icons/Launch';
 
 const styles = theme => ({
   detailsButton: {
-    flex: '1 0 10%',
     margin: 'auto 0',
   },
   content: {
