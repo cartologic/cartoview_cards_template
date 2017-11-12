@@ -4,9 +4,15 @@
 
 {% block extra_script %}
 <script type="text/javascript">
+  const app_name = window.location.search[0] === '?'
+    ? window.location.search.substr(1).split('=')[1]
+    : false
   const props = {
     title: 'Apps',
-    resources_url: urls.APP_INSTANCES_API_URL
+    resources_url: app_name 
+    ? urls.APP_INSTANCES_API_URL+'&app__name__icontains='+app_name
+    : urls.APP_INSTANCES_API_URL,
+    appName: app_name
   }
   var app = React.createElement(MaterialComponent, props);
   ReactDOM.render(app, document.getElementById("app"));

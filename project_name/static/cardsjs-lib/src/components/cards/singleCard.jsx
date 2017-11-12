@@ -19,6 +19,10 @@ import SimpleSnackbar from './copySnakeBar.jsx'
 
 const styles = theme => ({
   card: {
+    marginBottom: 10,
+  },
+  part1: {
+    minHeight: 60,
     display: 'flex',
     padding: '10 0 10 10',
     flexDirection: 'row',
@@ -29,8 +33,8 @@ const styles = theme => ({
     display: 'flex',
     justifyContent: 'center',
     flexDirection: 'column',
-    flex: '1 0 50%',
-    maxWidth: '50%'
+    flex: '1 0 40%',
+    maxWidth: '40%'
   },
   username: {
     fontWeight: 'bolder'
@@ -62,6 +66,19 @@ const styles = theme => ({
     height: 38,
     width: 38,
   },
+  info: {
+    padding: 10,
+    backgroundColor: 'lightgrey',
+    
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  Date: {
+    flexGrow:1
+  },
+  Owner: {
+    fontWeight:'Bolder'
+  }
 });
 
 class MediaControlCard extends React.Component {
@@ -82,27 +99,37 @@ class MediaControlCard extends React.Component {
     return (
       <div>
         <Card className={classes.card}>
-          <CardMedia
-              className={classes.cover}
-              image={thumbnail_url}
-              title={title}
-            />  
-  
-          <CardContent className={classes.content}>
-            <Typography type="body1" noWrap>{title}</Typography>
-            <Typography type="body2" color="secondary">
-              {new Date(date).toDateString()}
-            </Typography>
-          </CardContent>
-  
-          <DetailsPopover
-            launch_app_url={launch_app_url}
-            detail_url = {detail_url}
-            className={classes.detailsButton} 
-            handleCopyClick={()=>{this.handleCopyClick()}}
+          <div className={classes.part1}>
+            <CardMedia
+                className={classes.cover}
+                image={thumbnail_url}
+                title={title}
+              />  
+    
+            <CardContent className={classes.content}>
+              <Typography type="body1" noWrap>{title}</Typography>
+            </CardContent>
+    
+            <DetailsPopover
+              launch_app_url={launch_app_url}
+              detail_url = {detail_url}
+              className={classes.detailsButton} 
+              handleCopyClick={()=>{this.handleCopyClick()}}
             />
+          </div>  
+          
+          <div className={classes.part2}>
+            <div className={classes.info}>
+              <Typography className={classes.Date} type="body2" color="secondary">
+                {new Date(date).toDateString()}
+              </Typography>
+              <Typography className={classes.Owner} type="body2" color="secondary">
+                {owner}
+              </Typography>
+            </div>
+          </div>  
         </Card>
-        <SimpleSnackbar open={this.state.snakeBarOpen}/>
+        <SimpleSnackbar open={this.state.snakeBarOpen} />
       </div>
     );
   } 

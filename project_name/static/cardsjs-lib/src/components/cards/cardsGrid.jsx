@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {withStyles} from 'material-ui/styles';
 import classNames from 'classnames';
-
+import Typography from 'material-ui/Typography';
 import Grid from 'material-ui/Grid';
 
 import {default as SingleCard} from './singleCard.jsx'
@@ -11,7 +11,9 @@ const styles = theme => ({
   rootGrid: {
     width: '98%',
   },
-  gridCell: {},
+  title: {
+    marginLeft: 30
+  },
 })
 
 class CardsGrid extends React.Component {
@@ -64,12 +66,17 @@ class CardsGrid extends React.Component {
 
   render() {
     const { classes } = this.props;
+    const title = this.props.title && 
+      < Typography type="headline" className={classes.title} gutterBottom>
+        Featured Apps
+      </Typography>
     return (
-      <Grid container direction={"row"} className={classes.rootGrid+' cardsContainer'} spacing={8}>
-        {this.state.resources && this.renderCards(classes)}
-        {/* <hr />
-        <SingleCard /> */}
-      </Grid>
+      <div>
+        {title}
+        <Grid container direction={"row"} className={classes.rootGrid + ' cardsContainer'} spacing={8}>
+          {this.state.resources && this.renderCards(classes)}
+        </Grid>
+      </div>  
     );
   }
 }

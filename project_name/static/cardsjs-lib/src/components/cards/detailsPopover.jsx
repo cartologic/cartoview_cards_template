@@ -24,6 +24,9 @@ const styles = theme => ({
     flexDirection: 'column',
     alignItems: 'center',
     padding: '0 10',
+  },
+  copyButton: {
+    width:'unset !important'
   }
 });
 

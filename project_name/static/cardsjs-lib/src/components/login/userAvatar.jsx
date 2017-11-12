@@ -48,7 +48,7 @@ class AnchorPlayground extends React.Component {
     return (
       <div>
         <Avatar aria-label="logout" className={classes.avatar + ' user_avatar'} ref={node => {this.button = node;}} onClick={()=>{this.handleClickButton()}}>
-          {'A'.toUpperCase()}
+          {user_name[0].toUpperCase()}
         </Avatar>
         <Popover
           open={this.state.open}

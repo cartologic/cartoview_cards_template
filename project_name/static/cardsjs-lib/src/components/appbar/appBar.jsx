@@ -51,6 +51,7 @@ class MainViewAppBar extends React.Component {
         keywords: nextProps.keywords,
         categories: nextProps.categories,
         owners: nextProps.owners,
+        title: nextProps.title,
       })
     }
   }

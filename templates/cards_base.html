@@ -41,13 +41,15 @@
       APP_API_URL: '/api/app/',
       KEYWORDS_API_URL: '/api/keywords',
       CATEGORIES_API_URL: '/api/categories',
-      OWNERS_API_URL: '/api/owners'
+      OWNERS_API_URL: '/api/owners',
+      FEATURED_API_URL: '/api/featured/?',
     }
     {% if request.user.is_authenticated %}
       const user_logged_in = true
       const user_name = '{{request.user}}'
     {% else %}
       const user_logged_in = false
+      const user_name = undefined
     {% endif %}
   </script>
   <script src='{% static "cardsjs-lib/dist/materialComponent.entry.js" %}'></script>

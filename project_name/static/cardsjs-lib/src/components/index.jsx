@@ -15,6 +15,7 @@ import {default as LeftDrawer} from './drawers/leftDrawers.jsx'
 import {default as CardsGrid} from './cards/cardsGrid.jsx'
 
 import '../css/style.css'
+import { dark } from '../../../../../../cartoview_cards_template/project_name/static/cardsjs-lib/node_modules/material-ui/styles/createPalette';
 
 const drawerWidth = 240;
 const styles = theme => {
@@ -118,7 +119,10 @@ class CardsView extends React.Component {
 
   getResources() {
     fetch(this.props.resources_url, {credentials: 'include'}).then((response) => response.json()).then((data) => {
-      this.setState({ resources: data.objects, nextURL: data.meta.next, loading: false})
+      this.setState({ resources: data.objects, nextURL: data.meta.next, loading: false }, () => {
+        let appName = this.props.appName && data.objects.length > 0 && this.state.resources[0].app.title
+        this.setState({appName})
+      })
     })
 
     let categories = []
@@ -211,23 +215,35 @@ class CardsView extends React.Component {
   }
 
   getApps() {
-    let url = urls.APP_API_URL
-    let apps = [] 
-    
-    return new Promise((resolve, reject) => {
-      fetch(url, { credentials: 'include' })
-        .then(res => res.json())
-        .then(data => {
-          return data.objects.map((o) => {
-            apps.push({
-              appTitle: o.title,
-              appName: o.name,
-              count: o.app_instance_count,
-            })
-          })
+    let appsUrls = []
+    let username = user_name ? user_name : ''
+    return fetch(urls.APP_API_URL, { credentials: 'include' })
+      .then(res => res.json())
+      .then((data => {
+        data.objects.map((object) => {
+          object.app_instance_count > 0 &&
+          appsUrls.push(
+            // where user_name defined in the cards_base.html
+            `/api/appinstances/?app__name__icontains=${object.name}&limit=1`,
+          )
         })
-      resolve(apps)
-    })
+
+        let apps = []
+        appsUrls.map(url => {
+          fetch(url, { credentials: 'include' })
+            .then(res => res.json())
+            .then(data => {
+              data.objects.map((object) => {
+                apps.push({
+                  appTitle: object.app.title,
+                  appName: object.app.name,
+                  count: data.meta.total_count
+                })
+              })
+            })
+        })
+        return Promise.resolve(apps)
+      }))
   }
 
   resourcesCount() {
@@ -294,7 +310,7 @@ class CardsView extends React.Component {
     }
     const title=(
       <Typography type="body1" color="inherit" className={classes.title} noWrap>
-        {this.props.title}
+        {this.state.appName || this.props.title}
       </Typography>
     )
 
@@ -340,9 +356,9 @@ class CardsView extends React.Component {
             id='mainId'  
             className={classNames(classes.content, this.state.leftDrawerOpen && classes.contentShift)}>
             <CardsGrid
-              resources={this.state.resources
-              ? this.state.resources
-                : []} />
+              resources={this.state.resources ? this.state.resources : []}
+              title={this.props.home && 'Featured'}
+            />
             {
               this.state.loading
             ? <CircularProgress className={classes.progress} />

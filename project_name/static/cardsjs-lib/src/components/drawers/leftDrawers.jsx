@@ -53,6 +53,18 @@ const styles = theme => ({
     height: 15,
     padding: 3,
     fontSize: 'small'
+  },
+  NavigationList: {
+    position: 'absolute',
+    bottom: 50,
+    right: 0,
+    left: 0,
+    overflowY: 'overlay',
+    maxHeight:'calc(100%- 245px)'
+  },
+  appsList: {
+    overflowY: 'overlay',
+    maxHeight:'calc(100% - 290px)'
   }
 })
 
@@ -79,7 +91,9 @@ class MainViewDrawer extends React.Component {
     const apps = this.state.apps && this.state.apps.map((app, i) => {
       if (app.count > 0) {
         return (
-          <ListItem button key={`${i}`}>
+          <ListItem
+            button key={`${i}`}
+            onClick={() => window.location.href = `${urls.APPS_URL}?app_name=${app.appName}`}>
             <ListItemIcon>
               <GridIcon />
             </ListItemIcon>
@@ -89,38 +103,44 @@ class MainViewDrawer extends React.Component {
         )
       }
     })
+    const appsList = (
+      <List className={classes.appsList}>
+        {apps}
+      </List>
+    )
     const NavigationList = (
-        <List>
-          <ListItem onClick={() => window.location.href = urls.MAPS_URL} button>
-            <ListItemIcon>
-              <MapIcon/>
-            </ListItemIcon>
-            <ListItemText primary={"Maps"} />
-            <Avatar className={classes.countAvatar}>{this.props.count.mapsCount}</Avatar>
-          </ListItem>
-          <ListItem onClick={() => window.location.href = urls.LAYERS_URL} button>
-            <ListItemIcon>
-              <MapIcon/>
-            </ListItemIcon>
-            <ListItemText primary={"Layers"}/>
-            <Avatar className={classes.countAvatar}>{this.props.count.layersCount}</Avatar>
-          </ListItem>
-          <Divider/>
-          <ListItem onClick={() => window.location.href = urls.APPS_URL} button>
+      <List className={classes.NavigationList}>
+      <Divider />   
+        <ListItem onClick={() => window.location.href = urls.APPS_URL} button>
             <ListItemIcon>
               <GridIcon/>
             </ListItemIcon>
             <ListItemText primary={"Apps"}/>
             <Avatar className={classes.countAvatar}>{this.props.count.appsCount}</Avatar>
         </ListItem>
-          <Divider />
-          {apps}
+        <Divider />
+        <ListItem onClick={() => window.location.href = urls.MAPS_URL} button>
+          <ListItemIcon>
+            <MapIcon/>
+          </ListItemIcon>
+          <ListItemText primary={"Maps"} />
+          <Avatar className={classes.countAvatar}>{this.props.count.mapsCount}</Avatar>
+        </ListItem>
+        <ListItem onClick={() => window.location.href = urls.LAYERS_URL} button>
+          <ListItemIcon>
+            <MapIcon/>
+          </ListItemIcon>
+          <ListItemText primary={"Layers"}/>
+          <Avatar className={classes.countAvatar}>{this.props.count.layersCount}</Avatar>
+        </ListItem>
+        <Divider />        
       </List>
       
 
     );
     const drawer = (
       <div className={classes.drawerInner}>
+        {appsList}
         {NavigationList}
         {user_logged_in && <LogoutDrawerButton />}
       </div>
@@ -144,6 +164,7 @@ class MainViewDrawer extends React.Component {
             </Toolbar>
           </AppBar>
         </div>
+        {appsList}
         {NavigationList}
         {user_logged_in && <LogoutDrawerButton/>}
       </div>
@@ -169,7 +190,9 @@ class MainViewDrawer extends React.Component {
             classes={{
             paper: classes.drawerPaperSmall
             }}
-            open={this.state.open}>
+            open={this.state.open}
+            onRequestClose={()=>{this.props.handleDrawerClose()}}
+          >
             {drawerSmallDevices}
           </Drawer>
         </Hidden>
