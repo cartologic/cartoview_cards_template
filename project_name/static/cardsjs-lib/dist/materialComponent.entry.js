@@ -51477,15 +51477,22 @@ var styles = function styles(theme) {
     },
     NavigationList: {
       position: 'absolute',
-      bottom: 50,
+      bottom: 78,
       right: 0,
-      left: 0,
-      overflowY: 'overlay',
-      maxHeight: 'calc(100%- 245px)'
+      left: 0
     },
     appsList: {
       overflowY: 'overlay',
-      maxHeight: 'calc(100% - 290px)'
+      maxHeight: 'calc(100% - 304px)'
+    },
+    desktopLink: {
+      position: 'absolute',
+      bottom: 0,
+      left: 0,
+      right: 0,
+      padding: 10,
+      display: 'flex',
+      justifyContent: 'center'
     }
   };
 };
@@ -51608,12 +51615,32 @@ var MainViewDrawer = function (_React$Component) {
         ),
         _react2.default.createElement(_Divider2.default, null)
       );
+
       var drawer = _react2.default.createElement(
         'div',
         { className: classes.drawerInner },
         appsList,
         NavigationList,
         user_logged_in && _react2.default.createElement(_logoutDialogDrawer2.default, null)
+      );
+
+      var desktopSiteLink = _react2.default.createElement(
+        'div',
+        { className: classes.desktopLink },
+        _react2.default.createElement(
+          _Typography2.default,
+          { className: classes.Owner, type: 'body2', color: 'secondary' },
+          'View Cartoivew in ',
+          _react2.default.createElement(
+            'span',
+            null,
+            _react2.default.createElement(
+              'a',
+              { href: '#' },
+              ' Desktop'
+            )
+          )
+        )
       );
 
       var drawerSmallDevices = _react2.default.createElement(
@@ -51645,7 +51672,9 @@ var MainViewDrawer = function (_React$Component) {
         ),
         appsList,
         NavigationList,
-        user_logged_in && _react2.default.createElement(_logoutDialogDrawer2.default, null)
+        user_logged_in && _react2.default.createElement(_logoutDialogDrawer2.default, null),
+        _react2.default.createElement(_Divider2.default, null),
+        desktopSiteLink
       );
 
       return _react2.default.createElement(
@@ -52198,7 +52227,7 @@ var styles = {
   },
   logoutButton: {
     position: 'absolute',
-    bottom: 0,
+    bottom: 30,
     right: 0,
     left: 0
   }

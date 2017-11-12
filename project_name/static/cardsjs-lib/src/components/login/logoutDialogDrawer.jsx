@@ -17,7 +17,7 @@ const styles = {
   },
   logoutButton: {
     position: 'absolute',
-    bottom: 0,
+    bottom: 30,
     right: 0,
     left: 0
   }

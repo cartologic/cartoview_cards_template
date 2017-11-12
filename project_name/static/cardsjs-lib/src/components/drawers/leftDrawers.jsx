@@ -56,16 +56,23 @@ const styles = theme => ({
   },
   NavigationList: {
     position: 'absolute',
-    bottom: 50,
+    bottom: 78,
     right: 0,
-    left: 0,
-    overflowY: 'overlay',
-    maxHeight:'calc(100%- 245px)'
+    left: 0,    
   },
   appsList: {
     overflowY: 'overlay',
-    maxHeight:'calc(100% - 290px)'
-  }
+    maxHeight:'calc(100% - 304px)'
+  },
+  desktopLink: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    padding: 10,
+    display: 'flex',
+    justifyContent:'center'
+  },
 })
 
 class MainViewDrawer extends React.Component {
@@ -135,9 +142,8 @@ class MainViewDrawer extends React.Component {
         </ListItem>
         <Divider />        
       </List>
-      
-
     );
+    
     const drawer = (
       <div className={classes.drawerInner}>
         {appsList}
@@ -145,6 +151,14 @@ class MainViewDrawer extends React.Component {
         {user_logged_in && <LogoutDrawerButton />}
       </div>
     );
+
+    const desktopSiteLink = (
+      <div className={classes.desktopLink}>
+        <Typography className={classes.Owner} type="body2" color="secondary">
+          View Cartoivew in <span><a href="#"> Desktop</a></span>
+        </Typography>
+      </div>
+    )
 
     const drawerSmallDevices = (
       <div className={classes.drawerInner}>
@@ -166,7 +180,9 @@ class MainViewDrawer extends React.Component {
         </div>
         {appsList}
         {NavigationList}
-        {user_logged_in && <LogoutDrawerButton/>}
+        {user_logged_in && <LogoutDrawerButton />}
+        <Divider /> 
+        {desktopSiteLink}
       </div>
     );
 
