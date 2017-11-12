@@ -93,17 +93,24 @@ class MediaControlCard extends React.Component {
     this.setState({ snakeBarOpen: true });
   };
 
+  onCardMediaClick() {
+    if (this.props.pageType === 'documents') {
+      window.open(`${this.props.detail_url}/download`)
+    }
+  }
+
   render(){
     const { classes, theme } = this.props;
-    const {id, owner, title, date, thumbnail_url, abstract, detail_url, launch_app_url} = this.props;
+    const {id, owner, title, date, thumbnail_url, abstract, detail_url, launch_app_url, pageType} = this.props;
     return (
       <div>
         <Card className={classes.card}>
           <div className={classes.part1}>
             <CardMedia
-                className={classes.cover}
-                image={thumbnail_url}
-                title={title}
+              className={`${classes.cover} ${pageType === 'documents' && 'documentMedia'}`}
+              image={thumbnail_url}
+              title={title}
+              onClick={() => {this.onCardMediaClick()}} 
               />  
     
             <CardContent className={classes.content}>

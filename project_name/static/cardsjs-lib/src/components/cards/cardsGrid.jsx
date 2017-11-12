@@ -57,6 +57,7 @@ class CardsGrid extends React.Component {
               abstract={resource.abstract}
               detail_url={resource.detail_url}
               launch_app_url={resource.launch_app_url}
+              pageType={this.props.pageType}
             />
           </Grid>
         )

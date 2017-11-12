@@ -11,6 +11,7 @@ import MapIcon from 'material-ui-icons/Map'
 import ChevronLeftIcon from 'material-ui-icons/ChevronLeft';
 import List, {ListItem, ListItemIcon, ListItemText} from 'material-ui/List'
 import GridIcon from 'material-ui-icons/GridOn'
+import InsertDriveFile from 'material-ui-icons/InsertDriveFile'
 import Hidden from 'material-ui/Hidden';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
@@ -142,7 +143,7 @@ class MainViewDrawer extends React.Component {
         </ListItem>
         <ListItem onClick={() => window.location.href = urls.DOCUMENTS_URL} button>
           <ListItemIcon>
-            <MapIcon/>
+            <InsertDriveFile />
           </ListItemIcon>
           <ListItemText primary={"Documents"}/>
           <Avatar className={classes.countAvatar}>{this.props.count.documentsCount}</Avatar>

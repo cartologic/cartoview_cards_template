@@ -360,6 +360,7 @@ class CardsView extends React.Component {
             <CardsGrid
               resources={this.state.resources ? this.state.resources : []}
               title={this.props.home && 'Featured'}
+              pageType= {this.props.pageType}
             />
             {
               this.state.loading

@@ -26,3 +26,10 @@
 .cardsContainer{
   margin: auto !important;
 }
+
+.documentMedia{ 
+  background-size: contain !important;
+}
+.documentMedia:hover{
+  cursor: pointer !important;
+}

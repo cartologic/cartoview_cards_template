@@ -37604,7 +37604,8 @@ var CardsView = function (_React$Component) {
               className: (0, _classnames2.default)(classes.content, this.state.leftDrawerOpen && classes.contentShift) },
             _react2.default.createElement(_cardsGrid2.default, {
               resources: this.state.resources ? this.state.resources : [],
-              title: this.props.home && 'Featured'
+              title: this.props.home && 'Featured',
+              pageType: this.props.pageType
             }),
             this.state.loading ? _react2.default.createElement(_Progress.CircularProgress, { className: classes.progress }) : _react2.default.createElement(
               'div',
@@ -51405,6 +51406,10 @@ var _GridOn = __webpack_require__(440);
 
 var _GridOn2 = _interopRequireDefault(_GridOn);
 
+var _InsertDriveFile = __webpack_require__(466);
+
+var _InsertDriveFile2 = _interopRequireDefault(_InsertDriveFile);
+
 var _Hidden = __webpack_require__(166);
 
 var _Hidden2 = _interopRequireDefault(_Hidden);
@@ -51622,7 +51627,7 @@ var MainViewDrawer = function (_React$Component) {
           _react2.default.createElement(
             _List.ListItemIcon,
             null,
-            _react2.default.createElement(_Map2.default, null)
+            _react2.default.createElement(_InsertDriveFile2.default, null)
           ),
           _react2.default.createElement(_List.ListItemText, { primary: "Documents" }),
           _react2.default.createElement(
@@ -52506,6 +52511,8 @@ var CardsGrid = function (_React$Component) {
   }, {
     key: 'renderCards',
     value: function renderCards(classes) {
+      var _this2 = this;
+
       return this.state.resources.map(function (resource, i) {
         return _react2.default.createElement(
           _Grid2.default,
@@ -52526,7 +52533,8 @@ var CardsGrid = function (_React$Component) {
             date: resource.date,
             abstract: resource.abstract,
             detail_url: resource.detail_url,
-            launch_app_url: resource.launch_app_url
+            launch_app_url: resource.launch_app_url,
+            pageType: _this2.props.pageType
           })
         );
       });
@@ -52727,6 +52735,13 @@ var MediaControlCard = function (_React$Component) {
       this.setState({ snakeBarOpen: true });
     }
   }, {
+    key: 'onCardMediaClick',
+    value: function onCardMediaClick() {
+      if (this.props.pageType === 'documents') {
+        window.open(this.props.detail_url + '/download');
+      }
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
@@ -52742,7 +52757,8 @@ var MediaControlCard = function (_React$Component) {
           thumbnail_url = _props2.thumbnail_url,
           abstract = _props2.abstract,
           detail_url = _props2.detail_url,
-          launch_app_url = _props2.launch_app_url;
+          launch_app_url = _props2.launch_app_url,
+          pageType = _props2.pageType;
 
       return _react2.default.createElement(
         'div',
@@ -52754,9 +52770,12 @@ var MediaControlCard = function (_React$Component) {
             'div',
             { className: classes.part1 },
             _react2.default.createElement(_Card.CardMedia, {
-              className: classes.cover,
+              className: classes.cover + ' ' + (pageType === 'documents' && 'documentMedia'),
               image: thumbnail_url,
-              title: title
+              title: title,
+              onClick: function onClick() {
+                _this2.onCardMediaClick();
+              }
             }),
             _react2.default.createElement(
               _Card.CardContent,
@@ -54423,7 +54442,7 @@ exports = module.exports = __webpack_require__(463)(undefined);
 
 
 // module
-exports.push([module.i, ".myClass{\n  width: 240px !important\n}\n\n.user_avatar:hover{\n  background-color: #fff !important;\n  color: black !important;\n  cursor: pointer\n}\n\n.filtersContainer{\n  display: -webkit-box;\n  display: -moz-box;\n  display: -ms-flexbox;\n  display: -webkit-flex;\n  display: flex;\n\n  flex-flow: row wrap;\n  justify-content: center;\n\n  margin: 15 auto;\n  max-width: 90%;\n  width: max-content;\n}\n\n.cardsContainer{\n  margin: auto !important;\n}\n", ""]);
+exports.push([module.i, ".myClass{\n  width: 240px !important\n}\n\n.user_avatar:hover{\n  background-color: #fff !important;\n  color: black !important;\n  cursor: pointer\n}\n\n.filtersContainer{\n  display: -webkit-box;\n  display: -moz-box;\n  display: -ms-flexbox;\n  display: -webkit-flex;\n  display: flex;\n\n  flex-flow: row wrap;\n  justify-content: center;\n\n  margin: 15 auto;\n  max-width: 90%;\n  width: max-content;\n}\n\n.cardsContainer{\n  margin: auto !important;\n}\n\n.documentMedia{ \n  background-size: contain !important;\n}\n.documentMedia:hover{\n  cursor: pointer !important;\n}\n", ""]);
 
 // exports
 
@@ -54976,6 +54995,49 @@ module.exports = function (css) {
 	return fixedCss;
 };
 
+
+/***/ }),
+/* 466 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(global) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _pure = __webpack_require__(16);
+
+var _pure2 = _interopRequireDefault(_pure);
+
+var _SvgIcon = __webpack_require__(14);
+
+var _SvgIcon2 = _interopRequireDefault(_SvgIcon);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var SvgIconCustom = global.__MUI_SvgIcon__ || _SvgIcon2.default;
+
+var _ref = _react2.default.createElement('path', { d: 'M6 2c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6H6zm7 7V3.5L18.5 9H13z' });
+
+var InsertDriveFile = function InsertDriveFile(props) {
+  return _react2.default.createElement(
+    SvgIconCustom,
+    props,
+    _ref
+  );
+};
+
+InsertDriveFile = (0, _pure2.default)(InsertDriveFile);
+InsertDriveFile.muiName = 'SvgIcon';
+
+exports.default = InsertDriveFile;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15)))
 
 /***/ })
 /******/ ]);
