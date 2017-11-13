@@ -217,14 +217,14 @@ class CardsView extends React.Component {
   getApps() {
     let appsUrls = []
     let username = user_name ? user_name : ''
-    return fetch(urls.APP_API_URL, { credentials: 'include' })
+    return fetch(urls.SELECTED_APPS_API_URL, { credentials: 'include' })
       .then(res => res.json())
       .then((data => {
         data.objects.map((object) => {
-          object.app_instance_count > 0 &&
+          object.app.app_instance_count > 0 &&
           appsUrls.push(
             // where user_name defined in the cards_base.html
-            `/api/appinstances/?app__name__icontains=${object.name}&limit=1`,
+            `/api/appinstances/?app__name__icontains=${object.app.name}&limit=1`,
           )
         })
 

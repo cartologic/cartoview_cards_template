@@ -12047,7 +12047,7 @@ exports.default = FormatListBulleted;
 "use strict";
 
 
-var deselectCurrent = __webpack_require__(455);
+var deselectCurrent = __webpack_require__(456);
 
 var defaultMessage = 'Copy to clipboard: #{key}, Enter';
 
@@ -37238,11 +37238,11 @@ var _leftDrawers = __webpack_require__(435);
 
 var _leftDrawers2 = _interopRequireDefault(_leftDrawers);
 
-var _cardsGrid = __webpack_require__(443);
+var _cardsGrid = __webpack_require__(444);
 
 var _cardsGrid2 = _interopRequireDefault(_cardsGrid);
 
-__webpack_require__(461);
+__webpack_require__(462);
 
 var _createPalette = __webpack_require__(157);
 
@@ -37458,13 +37458,13 @@ var CardsView = function (_React$Component) {
     value: function getApps() {
       var appsUrls = [];
       var username = user_name ? user_name : '';
-      return fetch(urls.APP_API_URL, { credentials: 'include' }).then(function (res) {
+      return fetch(urls.SELECTED_APPS_API_URL, { credentials: 'include' }).then(function (res) {
         return res.json();
       }).then(function (data) {
         data.objects.map(function (object) {
-          object.app_instance_count > 0 && appsUrls.push(
+          object.app.app_instance_count > 0 && appsUrls.push(
           // where user_name defined in the cards_base.html
-          '/api/appinstances/?app__name__icontains=' + object.name + '&limit=1');
+          '/api/appinstances/?app__name__icontains=' + object.app.name + '&limit=1');
         });
 
         var apps = [];
@@ -51406,7 +51406,7 @@ var _GridOn = __webpack_require__(440);
 
 var _GridOn2 = _interopRequireDefault(_GridOn);
 
-var _InsertDriveFile = __webpack_require__(466);
+var _InsertDriveFile = __webpack_require__(441);
 
 var _InsertDriveFile2 = _interopRequireDefault(_InsertDriveFile);
 
@@ -51434,7 +51434,7 @@ var _Avatar = __webpack_require__(59);
 
 var _Avatar2 = _interopRequireDefault(_Avatar);
 
-var _logoutDialogDrawer = __webpack_require__(441);
+var _logoutDialogDrawer = __webpack_require__(442);
 
 var _logoutDialogDrawer2 = _interopRequireDefault(_logoutDialogDrawer);
 
@@ -52189,6 +52189,49 @@ exports.default = GridOn;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+/* WEBPACK VAR INJECTION */(function(global) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _pure = __webpack_require__(16);
+
+var _pure2 = _interopRequireDefault(_pure);
+
+var _SvgIcon = __webpack_require__(14);
+
+var _SvgIcon2 = _interopRequireDefault(_SvgIcon);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var SvgIconCustom = global.__MUI_SvgIcon__ || _SvgIcon2.default;
+
+var _ref = _react2.default.createElement('path', { d: 'M6 2c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6H6zm7 7V3.5L18.5 9H13z' });
+
+var InsertDriveFile = function InsertDriveFile(props) {
+  return _react2.default.createElement(
+    SvgIconCustom,
+    props,
+    _ref
+  );
+};
+
+InsertDriveFile = (0, _pure2.default)(InsertDriveFile);
+InsertDriveFile.muiName = 'SvgIcon';
+
+exports.default = InsertDriveFile;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15)))
+
+/***/ }),
+/* 442 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 
 
 Object.defineProperty(exports, "__esModule", {
@@ -52229,7 +52272,7 @@ var _List = __webpack_require__(57);
 
 var _List2 = _interopRequireDefault(_List);
 
-var _PowerSettingsNew = __webpack_require__(442);
+var _PowerSettingsNew = __webpack_require__(443);
 
 var _PowerSettingsNew2 = _interopRequireDefault(_PowerSettingsNew);
 
@@ -52385,7 +52428,7 @@ LogoutDialog.propTypes = {
 exports.default = (0, _styles.withStyles)(styles)(LogoutDialog);
 
 /***/ }),
-/* 442 */
+/* 443 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -52428,7 +52471,7 @@ exports.default = PowerSettingsNew;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15)))
 
 /***/ }),
-/* 443 */
+/* 444 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -52462,7 +52505,7 @@ var _Grid = __webpack_require__(104);
 
 var _Grid2 = _interopRequireDefault(_Grid);
 
-var _singleCard = __webpack_require__(444);
+var _singleCard = __webpack_require__(445);
 
 var _singleCard2 = _interopRequireDefault(_singleCard);
 
@@ -52573,7 +52616,7 @@ CardsGrid.propTypes = {
 exports.default = (0, _styles.withStyles)(styles)(CardsGrid);
 
 /***/ }),
-/* 444 */
+/* 445 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -52595,7 +52638,7 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _styles = __webpack_require__(17);
 
-var _Card = __webpack_require__(445);
+var _Card = __webpack_require__(446);
 
 var _Card2 = _interopRequireDefault(_Card);
 
@@ -52607,15 +52650,15 @@ var _Typography = __webpack_require__(18);
 
 var _Typography2 = _interopRequireDefault(_Typography);
 
-var _SkipPrevious = __webpack_require__(450);
+var _SkipPrevious = __webpack_require__(451);
 
 var _SkipPrevious2 = _interopRequireDefault(_SkipPrevious);
 
-var _PlayArrow = __webpack_require__(451);
+var _PlayArrow = __webpack_require__(452);
 
 var _PlayArrow2 = _interopRequireDefault(_PlayArrow);
 
-var _SkipNext = __webpack_require__(452);
+var _SkipNext = __webpack_require__(453);
 
 var _SkipNext2 = _interopRequireDefault(_SkipNext);
 
@@ -52631,11 +52674,11 @@ var _ContentCopy = __webpack_require__(114);
 
 var _ContentCopy2 = _interopRequireDefault(_ContentCopy);
 
-var _detailsPopover = __webpack_require__(453);
+var _detailsPopover = __webpack_require__(454);
 
 var _detailsPopover2 = _interopRequireDefault(_detailsPopover);
 
-var _copySnakeBar = __webpack_require__(456);
+var _copySnakeBar = __webpack_require__(457);
 
 var _copySnakeBar2 = _interopRequireDefault(_copySnakeBar);
 
@@ -52830,7 +52873,7 @@ MediaControlCard.propTypes = {
 exports.default = (0, _styles.withStyles)(styles, { withTheme: true })(MediaControlCard);
 
 /***/ }),
-/* 445 */
+/* 446 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -52840,7 +52883,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _Card = __webpack_require__(446);
+var _Card = __webpack_require__(447);
 
 Object.defineProperty(exports, 'default', {
   enumerable: true,
@@ -52858,7 +52901,7 @@ Object.defineProperty(exports, 'CardContent', {
   }
 });
 
-var _CardActions = __webpack_require__(447);
+var _CardActions = __webpack_require__(448);
 
 Object.defineProperty(exports, 'CardActions', {
   enumerable: true,
@@ -52867,7 +52910,7 @@ Object.defineProperty(exports, 'CardActions', {
   }
 });
 
-var _CardMedia = __webpack_require__(448);
+var _CardMedia = __webpack_require__(449);
 
 Object.defineProperty(exports, 'CardMedia', {
   enumerable: true,
@@ -52876,7 +52919,7 @@ Object.defineProperty(exports, 'CardMedia', {
   }
 });
 
-var _CardHeader = __webpack_require__(449);
+var _CardHeader = __webpack_require__(450);
 
 Object.defineProperty(exports, 'CardHeader', {
   enumerable: true,
@@ -52888,7 +52931,7 @@ Object.defineProperty(exports, 'CardHeader', {
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 446 */
+/* 447 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -52948,7 +52991,7 @@ exports.default = Card;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 447 */
+/* 448 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53039,7 +53082,7 @@ exports.default = (0, _withStyles2.default)(styles, { name: 'MuiCardActions' })(
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 448 */
+/* 449 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53113,7 +53156,7 @@ exports.default = (0, _withStyles2.default)(styles, { name: 'MuiCardMedia' })(Ca
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 449 */
+/* 450 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53243,7 +53286,7 @@ exports.default = (0, _withStyles2.default)(styles, { name: 'MuiCardHeader' })(C
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 450 */
+/* 451 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53286,7 +53329,7 @@ exports.default = SkipPrevious;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15)))
 
 /***/ }),
-/* 451 */
+/* 452 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53329,7 +53372,7 @@ exports.default = PlayArrow;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15)))
 
 /***/ }),
-/* 452 */
+/* 453 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53372,7 +53415,7 @@ exports.default = SkipNext;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15)))
 
 /***/ }),
-/* 453 */
+/* 454 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53408,7 +53451,7 @@ var _IconButton = __webpack_require__(31);
 
 var _IconButton2 = _interopRequireDefault(_IconButton);
 
-var _MoreHoriz = __webpack_require__(454);
+var _MoreHoriz = __webpack_require__(455);
 
 var _MoreHoriz2 = _interopRequireDefault(_MoreHoriz);
 
@@ -53591,7 +53634,7 @@ AnchorPlayground.propTypes = {
 exports.default = (0, _styles.withStyles)(styles)(AnchorPlayground);
 
 /***/ }),
-/* 454 */
+/* 455 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53634,7 +53677,7 @@ exports.default = MoreHoriz;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15)))
 
 /***/ }),
-/* 455 */
+/* 456 */
 /***/ (function(module, exports) {
 
 
@@ -53679,7 +53722,7 @@ module.exports = function () {
 
 
 /***/ }),
-/* 456 */
+/* 457 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53705,7 +53748,7 @@ var _Button = __webpack_require__(24);
 
 var _Button2 = _interopRequireDefault(_Button);
 
-var _Snackbar = __webpack_require__(457);
+var _Snackbar = __webpack_require__(458);
 
 var _Snackbar2 = _interopRequireDefault(_Snackbar);
 
@@ -53717,7 +53760,7 @@ var _Close = __webpack_require__(182);
 
 var _Close2 = _interopRequireDefault(_Close);
 
-var _Share = __webpack_require__(460);
+var _Share = __webpack_require__(461);
 
 var _Share2 = _interopRequireDefault(_Share);
 
@@ -53836,7 +53879,7 @@ SimpleSnackbar.propTypes = {
 exports.default = (0, _styles.withStyles)(styles)(SimpleSnackbar);
 
 /***/ }),
-/* 457 */
+/* 458 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53846,7 +53889,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _Snackbar = __webpack_require__(458);
+var _Snackbar = __webpack_require__(459);
 
 Object.defineProperty(exports, 'default', {
   enumerable: true,
@@ -53867,7 +53910,7 @@ Object.defineProperty(exports, 'SnackbarContent', {
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 458 */
+/* 459 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53928,7 +53971,7 @@ var _withStyles2 = _interopRequireDefault(_withStyles);
 
 var _transitions = __webpack_require__(45);
 
-var _ClickAwayListener = __webpack_require__(459);
+var _ClickAwayListener = __webpack_require__(460);
 
 var _ClickAwayListener2 = _interopRequireDefault(_ClickAwayListener);
 
@@ -54240,7 +54283,7 @@ Snackbar.defaultProps = {
 exports.default = (0, _withStyles2.default)(styles, { name: 'MuiSnackbar' })(Snackbar);
 
 /***/ }),
-/* 459 */
+/* 460 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -54360,7 +54403,7 @@ var ClickAwayListener = function (_React$Component) {
 exports.default = ClickAwayListener;
 
 /***/ }),
-/* 460 */
+/* 461 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -54403,13 +54446,13 @@ exports.default = Share;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15)))
 
 /***/ }),
-/* 461 */
+/* 462 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(462);
+var content = __webpack_require__(463);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -54417,7 +54460,7 @@ var transform;
 var options = {"hmr":true}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(464)(content, options);
+var update = __webpack_require__(465)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -54434,10 +54477,10 @@ if(false) {
 }
 
 /***/ }),
-/* 462 */
+/* 463 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(463)(undefined);
+exports = module.exports = __webpack_require__(464)(undefined);
 // imports
 
 
@@ -54448,7 +54491,7 @@ exports.push([module.i, ".myClass{\n  width: 240px !important\n}\n\n.user_avatar
 
 
 /***/ }),
-/* 463 */
+/* 464 */
 /***/ (function(module, exports) {
 
 /*
@@ -54530,7 +54573,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 464 */
+/* 465 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -54586,7 +54629,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(465);
+var	fixUrls = __webpack_require__(466);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -54902,7 +54945,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 465 */
+/* 466 */
 /***/ (function(module, exports) {
 
 
@@ -54995,49 +55038,6 @@ module.exports = function (css) {
 	return fixedCss;
 };
 
-
-/***/ }),
-/* 466 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(global) {
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _pure = __webpack_require__(16);
-
-var _pure2 = _interopRequireDefault(_pure);
-
-var _SvgIcon = __webpack_require__(14);
-
-var _SvgIcon2 = _interopRequireDefault(_SvgIcon);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var SvgIconCustom = global.__MUI_SvgIcon__ || _SvgIcon2.default;
-
-var _ref = _react2.default.createElement('path', { d: 'M6 2c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6H6zm7 7V3.5L18.5 9H13z' });
-
-var InsertDriveFile = function InsertDriveFile(props) {
-  return _react2.default.createElement(
-    SvgIconCustom,
-    props,
-    _ref
-  );
-};
-
-InsertDriveFile = (0, _pure2.default)(InsertDriveFile);
-InsertDriveFile.muiName = 'SvgIcon';
-
-exports.default = InsertDriveFile;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15)))
 
 /***/ })
 /******/ ]);
