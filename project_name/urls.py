@@ -15,8 +15,18 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 
-urlpatterns = [
+from cartoview.urls import urlpatterns
+
+from tastypie.api import Api
+from .api import SelectedAppResource
+
+selected_apps_api = Api(api_name='apps')
+selected_apps_api.register(SelectedAppResource())
+
+urlpatterns += (
     url(r'^admin/', include(admin.site.urls)),
-]
-#from osgeo_importer.urls import urlpatterns as importer_urlpatterns
-#urlpatterns += importer_urlpatterns
+    url(r'^cards_api/', include(selected_apps_api.urls)),
+)
+
+# from osgeo_importer.urls import urlpatterns as importer_urlpatterns
+# urlpatterns += importer_urlpatterns
